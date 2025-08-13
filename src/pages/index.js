@@ -25,9 +25,8 @@ export default function Home() {
       <div
         className={`${styles.page} ${geistSans.variable} ${geistMono.variable}`}
       >
-        <main className={styles.main}>
-          <MusicPlayer />
-        </main>
+        <main className={styles.main}></main>
+        <MusicPlayer />
         <footer className={styles.footer}></footer>
       </div>
     </>

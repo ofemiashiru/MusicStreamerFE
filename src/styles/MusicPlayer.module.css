@@ -1,0 +1,26 @@
+.main {
+  display: grid;
+  grid-template-columns: 25% 50% 25%;
+  padding: 10px;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  border: 1px solid #000000;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+.left,
+.middle,
+.right {
+  border: 1px solid red;
+}
+
+.middle {
+  text-align: center;
+}
+
+.progress {
+  width: 90%;
+  margin: 10px;
+}

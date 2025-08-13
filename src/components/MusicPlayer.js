@@ -8,6 +8,8 @@ import {
   Volume2,
 } from "lucide-react";
 
+import styles from "@/styles/MusicPlayer.module.css";
+
 import Playlist from "./Playlist";
 
 export default function MusicPlayer() {
@@ -174,95 +176,80 @@ export default function MusicPlayer() {
 
   return (
     <div className="">
-      <div className="">
-        {/* Main title and app description */}
-        <header className="">
-          <h1 className="">My Streaming Service</h1>
-        </header>
-
-        <div className="">
-          {/* PlayList Section */}
-          <Playlist songs={songs} currentSongIndex={currentSongIndex} />
-
-          {/* Music Player Control Section */}
-          <div className="">
-            <div className="w-full">
-              <img
-                id="album-art"
-                src={currentSong.cover}
-                alt="Album Art"
-                className=""
-                onError={(e) =>
-                  (e.target.src =
-                    "https://placehold.co/300x300/4B5563/F9FAFB?text=No+Cover")
-                } // Fallback image
-              />
-              <h3 id="song-title" className="">
-                {currentSong.title}
-              </h3>
-              <p id="artist-name" className="">
-                {currentSong.artist}
-              </p>
-            </div>
-
-            {/* Audio Element */}
-            <audio
-              ref={audioPlayer}
-              src={currentSong.audio}
-              className="hidden"
-            ></audio>
-
-            {/* Playback Controls */}
-            <div className="">
-              <button className="" onClick={handlePrev}>
-                <SkipBack size={28} className="" />
-              </button>
-              <button
-                className={`${isPlaying ? "bg-indigo-700" : "bg-indigo-600"}`}
-                onClick={togglePlayPause}
-              >
-                {isPlaying ? (
-                  <Pause size={28} className="" />
-                ) : (
-                  <Play size={28} className="" />
-                )}
-              </button>
-              <button className="" onClick={handleNext}>
-                <SkipForward size={28} className="" />
-              </button>
-            </div>
-
-            {/* Progress Bar */}
-            <div className="">
-              <div className="">
-                <span id="current-time">{currentTime}</span>
-                <span id="duration">{duration}</span>
-              </div>
-              <input
-                type="range"
-                id="progress-bar"
-                className=""
-                value={progress}
-                max="100"
-                onChange={handleSeek}
-              />
-            </div>
-
-            {/* Volume Control */}
-            <div className="">
-              <Volume size={20} className="" />
-              <input
-                type="range"
-                id="volume-slider"
-                className=""
-                defaultValue="50"
-                max="100"
-                onChange={setVolume}
-              />
-              <Volume2 size={20} className="" />
-            </div>
-          </div>
+      <div className={styles.main}>
+        <div className={styles.left}>
+          {/* Left Section */}
+          <img
+            id="album-art"
+            src={currentSong.cover}
+            alt="Album Art"
+            onError={(e) =>
+              (e.target.src =
+                "https://placehold.co/300x300/4B5563/F9FAFB?text=No+Cover")
+            } // Fallback image
+          />
         </div>
+        <div className={styles.middle}>
+          <h3 id="song-title" className="">
+            {currentSong.title} - <span>{currentSong.artist}</span>
+          </h3>
+          <p id="current-time">
+            {currentTime} / {duration}
+          </p>
+          {/* Playback Controls */}
+          <div>
+            <button className="" onClick={handlePrev}>
+              <SkipBack size={28} className="" />
+            </button>
+            <button
+              className={`${isPlaying ? "bg-indigo-700" : "bg-indigo-600"}`}
+              onClick={togglePlayPause}
+            >
+              {isPlaying ? (
+                <Pause size={28} className="" />
+              ) : (
+                <Play size={28} className="" />
+              )}
+            </button>
+            <button className="" onClick={handleNext}>
+              <SkipForward size={28} className="" />
+            </button>
+          </div>
+          {/* Progress Bar */}
+          <input
+            type="range"
+            id="progress-bar"
+            className={styles.progress}
+            value={progress}
+            max="100"
+            onChange={handleSeek}
+          />
+          {/* Audio Element */}
+          <audio
+            ref={audioPlayer}
+            src={currentSong.audio}
+            className="hidden"
+          ></audio>
+        </div>
+        <div className={styles.section}>
+          <Volume size={20} className="" />
+          <input
+            type="range"
+            id="volume-slider"
+            className=""
+            defaultValue="50"
+            max="100"
+            onChange={setVolume}
+          />
+          <Volume2 size={20} className="" />
+        </div>
+      </div>
+      {/* Main title and app description */}
+      <header className=""></header>
+
+      <div className="">
+        {/* PlayList Section */}
+        {/* <Playlist songs={songs} currentSongIndex={currentSongIndex} /> */}
       </div>
     </div>
   );

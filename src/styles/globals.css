@@ -1,6 +1,7 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --opacity-40: 0.4;
 }
 
 @media (prefers-color-scheme: light) {

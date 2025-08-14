@@ -4,7 +4,8 @@ import {
   Pause,
   SkipBack,
   SkipForward,
-  Volume,
+  VolumeX,
+  Volume1,
   Volume2,
 } from "lucide-react";
 
@@ -27,6 +28,9 @@ export default function MusicPlayer() {
   const [duration, setDuration] = useState("0:00");
   // State to show loading/error messages
   const [statusMessage, setStatusMessage] = useState("Loading songs...");
+  // State for the songVolume Icon
+  const [songVolume, setSongVolume] = useState(50);
+  const volumeSizeIcon = 18;
 
   // useRef hook to get a reference to the audio HTML element
   const audioPlayer = useRef();
@@ -151,6 +155,7 @@ export default function MusicPlayer() {
     if (audioPlayer.current) {
       audioPlayer.current.volume = e.target.value / 100;
     }
+    setSongVolume(e.target.value);
   };
 
   // Helper function to format time (e.g., 125 seconds -> 2:05)
@@ -179,40 +184,35 @@ export default function MusicPlayer() {
       <div className={styles.main}>
         <div className={styles.left}>
           {/* Left Section */}
-          <img
-            id="album-art"
-            src={currentSong.cover}
-            alt="Album Art"
-            onError={(e) =>
-              (e.target.src =
-                "https://placehold.co/300x300/4B5563/F9FAFB?text=No+Cover")
-            } // Fallback image
-          />
+          <div className={styles.artwork}>
+            <img
+              id="album-art"
+              src={currentSong.cover}
+              alt="Album Art"
+              onError={(e) =>
+                (e.target.src =
+                  "https://placehold.co/300x300/4B5563/F9FAFB?text=No+Cover")
+              } // Fallback image
+            />
+          </div>
         </div>
         <div className={styles.middle}>
-          <h3 id="song-title" className="">
+          <h3 id="song-title" className={styles.song}>
             {currentSong.title} - <span>{currentSong.artist}</span>
           </h3>
           <p id="current-time">
             {currentTime} / {duration}
           </p>
           {/* Playback Controls */}
-          <div>
-            <button className="" onClick={handlePrev}>
-              <SkipBack size={28} className="" />
+          <div className={styles.playback}>
+            <button onClick={handlePrev}>
+              <SkipBack size={28} />
             </button>
-            <button
-              className={`${isPlaying ? "bg-indigo-700" : "bg-indigo-600"}`}
-              onClick={togglePlayPause}
-            >
-              {isPlaying ? (
-                <Pause size={28} className="" />
-              ) : (
-                <Play size={28} className="" />
-              )}
+            <button onClick={togglePlayPause}>
+              {isPlaying ? <Pause size={38} /> : <Play size={38} />}
             </button>
-            <button className="" onClick={handleNext}>
-              <SkipForward size={28} className="" />
+            <button onClick={handleNext}>
+              <SkipForward size={28} />
             </button>
           </div>
           {/* Progress Bar */}
@@ -232,21 +232,26 @@ export default function MusicPlayer() {
           ></audio>
         </div>
         <div className={styles.section}>
-          <Volume size={20} className="" />
-          <input
-            type="range"
-            id="volume-slider"
-            className=""
-            defaultValue="50"
-            max="100"
-            onChange={setVolume}
-          />
-          <Volume2 size={20} className="" />
+          <div>
+            {songVolume > 60 ? (
+              <Volume2 size={volumeSizeIcon} className={styles.volumeIcon} />
+            ) : songVolume == 0 ? (
+              <VolumeX size={volumeSizeIcon} className={styles.volumeIcon} />
+            ) : (
+              <Volume1 size={volumeSizeIcon} className={styles.volumeIcon} />
+            )}
+
+            <input
+              type="range"
+              id="volume-slider"
+              className=""
+              defaultValue={songVolume}
+              max="100"
+              onChange={setVolume}
+            />
+          </div>
         </div>
       </div>
-      {/* Main title and app description */}
-      <header className=""></header>
-
       <div className="">
         {/* PlayList Section */}
         {/* <Playlist songs={songs} currentSongIndex={currentSongIndex} /> */}

@@ -1,32 +1,30 @@
-export default function Playlist({ songs, currentSongIndex }) {
+import styles from "@/styles/Playlist.module.css";
+
+export default function Playlist({ songs, currentSongIndex, onLoadSong }) {
   return (
-    <div className="">
-      <h2 className="">Playlist</h2>
-      <ul id="playlist" className="">
+    <div className={styles.main}>
+      <ul id="playlist" className={styles.playlist}>
         {songs.map((song, index) => (
           <li
             key={song.songId || index} // Use songId as key if available, fallback to index
-            className={`${
-              currentSongIndex === index
-                ? "bg-indigo-700 ring-2 ring-indigo-500"
-                : ""
-            }`}
-            onClick={() => loadSong(index)}
+            className={currentSongIndex === index ? styles.playing : ""}
+            onClick={() => onLoadSong(index)}
           >
-            <div className="flex-shrink-0">
-              <img
-                src={song.cover}
-                alt="Album Art"
-                className=""
-                onError={(e) =>
-                  (e.target.src =
-                    "https://placehold.co/100x100/4B5563/F9FAFB?text=No+Cover")
-                } // Fallback image
-              />
-            </div>
-            <div className="">
-              <p className="">{song.title}</p>
-              <p className="">{song.artist}</p>
+            <div className={styles.song}>
+              <div className={styles.coverBorder}>
+                <img
+                  src={song.cover}
+                  alt="Album Art"
+                  onError={(e) =>
+                    (e.target.src =
+                      "https://placehold.co/100x100/4B5563/F9FAFB?text=No+Cover")
+                  } // Fallback image
+                />
+              </div>
+              <div className={styles.songDetails}>
+                <p className={styles.title}>{song.title}</p>
+                <p className={styles.artist}>{song.artist}</p>
+              </div>
             </div>
           </li>
         ))}

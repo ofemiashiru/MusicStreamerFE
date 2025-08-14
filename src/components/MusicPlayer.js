@@ -31,6 +31,8 @@ export default function MusicPlayer() {
   // State for the songVolume Icon
   const [songVolume, setSongVolume] = useState(50);
   const volumeSizeIcon = 18;
+  // State for playlist
+  const [playlistVisible, setPlaylistVisible] = useState(false);
 
   // useRef hook to get a reference to the audio HTML element
   const audioPlayer = useRef();
@@ -158,6 +160,11 @@ export default function MusicPlayer() {
     setSongVolume(e.target.value);
   };
 
+  // Function to show playlist
+  const togglePlaylist = () => {
+    setPlaylistVisible(!playlistVisible);
+  };
+
   // Helper function to format time (e.g., 125 seconds -> 2:05)
   const formatTime = (seconds) => {
     if (isNaN(seconds) || seconds < 0) return "0:00";
@@ -171,8 +178,8 @@ export default function MusicPlayer() {
   // Render loading/error state if no songs are fetched yet
   if (songs.length === 0) {
     return (
-      <div className="">
-        <p className="">{statusMessage}</p>
+      <div>
+        <p>{statusMessage}</p>
       </div>
     );
   }
@@ -180,11 +187,11 @@ export default function MusicPlayer() {
   const currentSong = songs[currentSongIndex];
 
   return (
-    <div className="">
+    <div>
       <div className={styles.main}>
         <div className={styles.left}>
           {/* Left Section */}
-          <div className={styles.artwork}>
+          <div className={styles.artwork} onClick={togglePlaylist}>
             <img
               id="album-art"
               src={currentSong.cover}
@@ -200,9 +207,6 @@ export default function MusicPlayer() {
           <h3 id="song-title" className={styles.song}>
             {currentSong.title} - <span>{currentSong.artist}</span>
           </h3>
-          <p id="current-time">
-            {currentTime} / {duration}
-          </p>
           {/* Playback Controls */}
           <div className={styles.playback}>
             <button onClick={handlePrev}>
@@ -216,6 +220,7 @@ export default function MusicPlayer() {
             </button>
           </div>
           {/* Progress Bar */}
+          <span>{currentTime} </span>
           <input
             type="range"
             id="progress-bar"
@@ -224,6 +229,7 @@ export default function MusicPlayer() {
             max="100"
             onChange={handleSeek}
           />
+          <span> {duration}</span>
           {/* Audio Element */}
           <audio
             ref={audioPlayer}
@@ -244,7 +250,6 @@ export default function MusicPlayer() {
             <input
               type="range"
               id="volume-slider"
-              className=""
               defaultValue={songVolume}
               max="100"
               onChange={setVolume}
@@ -252,9 +257,15 @@ export default function MusicPlayer() {
           </div>
         </div>
       </div>
-      <div className="">
+      <div>
         {/* PlayList Section */}
-        {/* <Playlist songs={songs} currentSongIndex={currentSongIndex} /> */}
+        {playlistVisible && (
+          <Playlist
+            songs={songs}
+            currentSongIndex={currentSongIndex}
+            onLoadSong={loadSong}
+          />
+        )}
       </div>
     </div>
   );

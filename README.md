@@ -3,6 +3,10 @@
 Music Player inspired by Spotifys player and playlist, showcasing some of my own instrumental production that I have made.
 This project uses Next.js, Spring Boot (which can be found [here](https://github.com/ofemiashiru/MusicStreamerBE)) and S3 on AWS to store the audio and image files.
 
+Still in progress:
+
+## Iteration #1
+
 ![Current Image of Music Player](/public/music_player_so_far.png)
 
 ---

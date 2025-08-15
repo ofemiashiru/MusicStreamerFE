@@ -82,7 +82,7 @@ export default function MusicPlayer() {
 
     // Listener for updating the progress bar and time display
     const handleTimeUpdate = () => {
-      const progressPercent = (audio.currentTime / audio.duration) * 100;
+      const progressPercent = (audio.currentTime / audio.duration) * 100 || 0;
       setProgress(progressPercent);
       setCurrentTime(formatTime(audio.currentTime));
     };

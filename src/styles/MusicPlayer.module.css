@@ -5,8 +5,6 @@
   position: fixed;
   bottom: 0;
   width: 100%;
-  border-top-left-radius: 15px;
-  border-top-right-radius: 15px;
   text-align: center;
   font-size: 0.9rem;
   background-color: rgb(0 0 0 / var(--opacity-40, 1));
@@ -17,15 +15,22 @@
 .right {
 }
 
+.playlistMain {
+  position: absolute;
+  top: -300px;
+  left: 0;
+  text-align: left;
+}
+
 .artwork {
-  width: 120px;
+  width: 90px;
   cursor: pointer;
 }
 
 .artwork > img {
   width: 100%;
-  margin: 10px;
-  border-radius: 10px;
+  margin: 5px;
+  border-radius: 5px;
 }
 
 .song {

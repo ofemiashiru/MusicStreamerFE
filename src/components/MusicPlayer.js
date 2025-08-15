@@ -7,6 +7,8 @@ import {
   VolumeX,
   Volume1,
   Volume2,
+  ArrowDown,
+  ArrowUp,
 } from "lucide-react";
 
 import styles from "@/styles/MusicPlayer.module.css";
@@ -187,85 +189,84 @@ export default function MusicPlayer() {
   const currentSong = songs[currentSongIndex];
 
   return (
-    <div>
-      <div className={styles.main}>
-        <div className={styles.left}>
-          {/* Left Section */}
-          <div className={styles.artwork} onClick={togglePlaylist}>
-            <img
-              id="album-art"
-              src={currentSong.cover}
-              alt="Album Art"
-              onError={(e) =>
-                (e.target.src =
-                  "https://placehold.co/300x300/4B5563/F9FAFB?text=No+Cover")
-              } // Fallback image
+    <div className={styles.main}>
+      <div className={styles.left}>
+        {/* Left Section */}
+        <div className={styles.playlistMain}>
+          {playlistVisible && (
+            <Playlist
+              songs={songs}
+              currentSongIndex={currentSongIndex}
+              onLoadSong={loadSong}
             />
-          </div>
+          )}
         </div>
-        <div className={styles.middle}>
-          <h3 id="song-title" className={styles.song}>
-            {currentSong.title} - <span>{currentSong.artist}</span>
-          </h3>
-          {/* Playback Controls */}
-          <div className={styles.playback}>
-            <button onClick={handlePrev}>
-              <SkipBack size={28} />
-            </button>
-            <button onClick={togglePlayPause}>
-              {isPlaying ? <Pause size={38} /> : <Play size={38} />}
-            </button>
-            <button onClick={handleNext}>
-              <SkipForward size={28} />
-            </button>
-          </div>
-          {/* Progress Bar */}
-          <span>{currentTime} </span>
-          <input
-            type="range"
-            id="progress-bar"
-            className={styles.progress}
-            value={progress}
-            max="100"
-            onChange={handleSeek}
+        <div className={styles.artwork} onClick={togglePlaylist}>
+          {playlistVisible ? <ArrowDown size={20} /> : <ArrowUp size={20} />}
+          {/* PlayList Section */}
+          <img
+            id="album-art"
+            src={currentSong.cover}
+            alt="Album Art"
+            onError={(e) =>
+              (e.target.src =
+                "https://placehold.co/300x300/4B5563/F9FAFB?text=No+Cover")
+            } // Fallback image
           />
-          <span> {duration}</span>
-          {/* Audio Element */}
-          <audio
-            ref={audioPlayer}
-            src={currentSong.audio}
-            className="hidden"
-          ></audio>
-        </div>
-        <div className={styles.section}>
-          <div>
-            {songVolume > 60 ? (
-              <Volume2 size={volumeSizeIcon} className={styles.volumeIcon} />
-            ) : songVolume == 0 ? (
-              <VolumeX size={volumeSizeIcon} className={styles.volumeIcon} />
-            ) : (
-              <Volume1 size={volumeSizeIcon} className={styles.volumeIcon} />
-            )}
-
-            <input
-              type="range"
-              id="volume-slider"
-              defaultValue={songVolume}
-              max="100"
-              onChange={setVolume}
-            />
-          </div>
         </div>
       </div>
-      <div>
-        {/* PlayList Section */}
-        {playlistVisible && (
-          <Playlist
-            songs={songs}
-            currentSongIndex={currentSongIndex}
-            onLoadSong={loadSong}
+      <div className={styles.middle}>
+        <h3 id="song-title" className={styles.song}>
+          {currentSong.title} - <span>{currentSong.artist}</span>
+        </h3>
+        {/* Playback Controls */}
+        <div className={styles.playback}>
+          <button onClick={handlePrev}>
+            <SkipBack size={28} />
+          </button>
+          <button onClick={togglePlayPause}>
+            {isPlaying ? <Pause size={38} /> : <Play size={38} />}
+          </button>
+          <button onClick={handleNext}>
+            <SkipForward size={28} />
+          </button>
+        </div>
+        {/* Progress Bar */}
+        <span>{currentTime} </span>
+        <input
+          type="range"
+          id="progress-bar"
+          className={styles.progress}
+          value={progress}
+          max="100"
+          onChange={handleSeek}
+        />
+        <span> {duration}</span>
+        {/* Audio Element */}
+        <audio
+          ref={audioPlayer}
+          src={currentSong.audio}
+          className="hidden"
+        ></audio>
+      </div>
+      <div className={styles.section}>
+        <div>
+          {songVolume > 60 ? (
+            <Volume2 size={volumeSizeIcon} className={styles.volumeIcon} />
+          ) : songVolume == 0 ? (
+            <VolumeX size={volumeSizeIcon} className={styles.volumeIcon} />
+          ) : (
+            <Volume1 size={volumeSizeIcon} className={styles.volumeIcon} />
+          )}
+
+          <input
+            type="range"
+            id="volume-slider"
+            defaultValue={songVolume}
+            max="100"
+            onChange={setVolume}
           />
-        )}
+        </div>
       </div>
     </div>
   );

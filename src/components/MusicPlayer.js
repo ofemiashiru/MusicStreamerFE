@@ -192,18 +192,20 @@ export default function MusicPlayer() {
     <div className={styles.main}>
       <div className={styles.left}>
         {/* Left Section */}
-        <div className={styles.playlistMain}>
-          {playlistVisible && (
-            <Playlist
-              songs={songs}
-              currentSongIndex={currentSongIndex}
-              onLoadSong={loadSong}
-            />
-          )}
+        <div
+          className={
+            playlistVisible ? styles.playlistMain : styles.playlistMainHidden
+          }
+        >
+          {/* PlayList Section */}
+          <Playlist
+            songs={songs}
+            currentSongIndex={currentSongIndex}
+            onLoadSong={loadSong}
+          />
         </div>
         <div className={styles.artwork} onClick={togglePlaylist}>
           {playlistVisible ? <ArrowDown size={20} /> : <ArrowUp size={20} />}
-          {/* PlayList Section */}
           <img
             id="album-art"
             src={currentSong.cover}

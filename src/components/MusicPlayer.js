@@ -223,7 +223,7 @@ export default function MusicPlayer() {
       </div>
       <div className={styles.middle}>
         <h3 id="song-title" className={styles.song}>
-          {currentSong.title} - <span>{currentSong.artist}</span>
+          {currentSong.title} <span>by {currentSong.artist}</span>
         </h3>
         {/* Playback Controls */}
         <div className={styles.playback}>

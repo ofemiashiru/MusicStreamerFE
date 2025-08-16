@@ -5,7 +5,6 @@
   position: fixed;
   bottom: 0;
   width: 100%;
-  text-align: center;
   font-size: 0.9rem;
   background-color: rgb(0 0 0 / var(--opacity-40, 1));
   color: #ffffff;
@@ -48,11 +47,19 @@
 }
 
 .song {
-  background-color: #000000;
+  display: flex;
+  justify-content: center;
 }
 
 .song > span {
   font-weight: normal;
+  margin-left: 10px;
+}
+
+.playback {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .playback > button {
@@ -64,13 +71,24 @@
   background-color: #000000;
 }
 
+.progressContainer {
+  display: flex;
+  align-items: center;
+}
+
 .progress {
-  width: 80%;
+  width: 90%;
   margin: 10px;
 }
 
+.volumeContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .volumeIcon {
-  margin: 5px 5px 0;
+  margin: 5px;
 }
 
 .arrowIcon {

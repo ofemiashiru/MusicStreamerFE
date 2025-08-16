@@ -228,26 +228,28 @@ export default function MusicPlayer() {
         {/* Playback Controls */}
         <div className={styles.playback}>
           <button onClick={handlePrev}>
-            <SkipBack size={28} />
+            <SkipBack size={20} />
           </button>
           <button onClick={togglePlayPause}>
-            {isPlaying ? <Pause size={38} /> : <Play size={38} />}
+            {isPlaying ? <Pause size={30} /> : <Play size={30} />}
           </button>
           <button onClick={handleNext}>
-            <SkipForward size={28} />
+            <SkipForward size={20} />
           </button>
         </div>
         {/* Progress Bar */}
-        <span>{currentTime} </span>
-        <input
-          type="range"
-          id="progress-bar"
-          className={styles.progress}
-          value={progress}
-          max="100"
-          onChange={handleSeek}
-        />
-        <span> {duration}</span>
+        <div className={styles.progressContainer}>
+          <span>{currentTime}</span>
+          <input
+            type="range"
+            id="progress-bar"
+            className={styles.progress}
+            value={progress}
+            max="100"
+            onChange={handleSeek}
+          />
+          <span>{duration}</span>
+        </div>
         {/* Audio Element */}
         <audio
           ref={audioPlayer}
@@ -256,7 +258,7 @@ export default function MusicPlayer() {
         ></audio>
       </div>
       <div className={styles.section}>
-        <div>
+        <div className={styles.volumeContainer}>
           {songVolume > 60 ? (
             <Volume2 size={volumeSizeIcon} className={styles.volumeIcon} />
           ) : songVolume == 0 ? (

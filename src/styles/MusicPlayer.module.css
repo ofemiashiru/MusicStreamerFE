@@ -8,6 +8,7 @@
   text-align: center;
   font-size: 0.9rem;
   background-color: rgb(0 0 0 / var(--opacity-40, 1));
+  color: #ffffff;
 }
 
 .left,
@@ -48,7 +49,6 @@
 
 .song {
   background-color: #000000;
-  color: #ffffff;
 }
 
 .song > span {
@@ -73,6 +73,8 @@
   margin: 5px 5px 0;
 }
 
+.arrowIcon {
+}
 .red {
   background-color: red;
 }

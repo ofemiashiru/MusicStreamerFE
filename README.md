@@ -9,6 +9,14 @@ Still in progress:
 
 ![Current Image of Music Player](/public/music_player_so_far.png)
 
+## Iteration #2
+
+- Added navbar that collapses when screen is smaller, accompanied by a burger menu.
+- Repositioned playlist so that it appears when the album art in the bottom left is clicked.
+- Restyled the player colours and icons.
+
+![Current Image of Music Player](/public/music_player_so_far_2.png)
+
 ---
 
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/pages/api-reference/create-next-app).

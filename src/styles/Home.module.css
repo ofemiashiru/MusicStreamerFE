@@ -1,4 +1,5 @@
 .page {
+  position: relative;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -13,6 +14,7 @@
 }
 
 .main {
+  background-color: red;
 }
 
 .footer {
@@ -33,29 +35,6 @@
   .footer a:hover {
     text-decoration: underline;
     text-underline-offset: 4px;
-  }
-}
-
-@media (max-width: 600px) {
-  .page {
-  }
-
-  .main {
-  }
-
-  .main ol {
-  }
-
-  .ctas {
-  }
-
-  .ctas a {
-  }
-
-  a.secondary {
-  }
-
-  .footer {
   }
 }
 

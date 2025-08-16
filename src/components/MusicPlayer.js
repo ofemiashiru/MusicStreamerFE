@@ -205,7 +205,11 @@ export default function MusicPlayer() {
           />
         </div>
         <div className={styles.artwork} onClick={togglePlaylist}>
-          {playlistVisible ? <ArrowDown size={20} /> : <ArrowUp size={20} />}
+          {playlistVisible ? (
+            <ArrowDown size={20} className={styles.arrowIcon} />
+          ) : (
+            <ArrowUp size={20} className={styles.arrowIcon} />
+          )}
           <img
             id="album-art"
             src={currentSong.cover}

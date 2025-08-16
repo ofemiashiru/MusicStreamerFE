@@ -2,6 +2,7 @@ import Head from "next/head";
 import MusicPlayer from "@/components/MusicPlayer";
 import { Geist, Geist_Mono } from "next/font/google";
 import styles from "@/styles/Home.module.css";
+import NavBar from "@/components/NavBar";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -22,12 +23,15 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
+      <NavBar />
       <div
         className={`${styles.page} ${geistSans.variable} ${geistMono.variable}`}
       >
         <main className={styles.main}></main>
-        <MusicPlayer />
-        <footer className={styles.footer}></footer>
+
+        <footer className={styles.footer}>
+          <MusicPlayer />
+        </footer>
       </div>
     </>
   );

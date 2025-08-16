@@ -15,6 +15,10 @@
 .right {
 }
 
+.right {
+  display: flex;
+}
+
 .playlistMain {
   position: absolute;
   top: -300px;
@@ -85,6 +89,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 100%;
 }
 
 .volumeIcon {

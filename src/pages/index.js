@@ -1,17 +1,13 @@
 import Head from "next/head";
 import MusicPlayer from "@/components/MusicPlayer";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Noto_Sans_JP } from "next/font/google";
 import styles from "@/styles/Home.module.css";
 import NavBar from "@/components/NavBar";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const notoSansJP = Noto_Sans_JP({
   subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+  weight: ["100", "400", "700", "900"],
+  display: "swap",
 });
 
 export default function Home() {
@@ -23,10 +19,8 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <NavBar />
-      <div
-        className={`${styles.page} ${geistSans.variable} ${geistMono.variable}`}
-      >
+      <div className={`${styles.page} ${notoSansJP.className}`}>
+        <NavBar />
         <main className={styles.main}></main>
 
         <footer className={styles.footer}>

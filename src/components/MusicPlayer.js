@@ -257,7 +257,7 @@ export default function MusicPlayer() {
           className="hidden"
         ></audio>
       </div>
-      <div className={styles.section}>
+      <div className={styles.right}>
         <div className={styles.volumeContainer}>
           {songVolume > 60 ? (
             <Volume2 size={volumeSizeIcon} className={styles.volumeIcon} />

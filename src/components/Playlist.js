@@ -1,8 +1,14 @@
 import styles from "@/styles/Playlist.module.css";
 
+import { Search } from "lucide-react";
+
 export default function Playlist({ songs, currentSongIndex, onLoadSong }) {
   return (
     <div className={styles.main}>
+      <div className={styles.search}>
+        Search bar goes here
+        <Search size={20} strokeWidth={3} />
+      </div>
       <ul id="playlist" className={styles.playlist}>
         {songs.map((song, index) => (
           <li

@@ -1,4 +1,5 @@
 import styles from "@/styles/AlbumList.module.css";
+import { CirclePlay } from "lucide-react";
 
 export default function AlbumList({
   albums,
@@ -31,6 +32,9 @@ export default function AlbumList({
               <div className={styles.albuminfo}>
                 <p>{album.title}</p>
                 <p>{album.artist}</p>
+              </div>
+              <div className={styles.icon}>
+                <CirclePlay size={60} strokeWidth={1} />
               </div>
             </li>
           ))}

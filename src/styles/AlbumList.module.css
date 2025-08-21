@@ -1,15 +1,17 @@
 .albums {
   padding: 10px;
-  width: 50%;
+  width: 400px;
   overflow-y: scroll;
 }
 
 .album {
-  display: flex;
+  display: grid;
+  grid-template-columns: 110px auto auto;
   margin-bottom: 10px;
   cursor: pointer;
   padding: 10px;
   border-radius: 5px;
+  border: 1px solid red;
 }
 
 .album:hover {
@@ -32,4 +34,11 @@
 
 .albuminfo > p {
   margin-bottom: 5px;
+  font-size: 0.9rem;
+}
+
+.icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

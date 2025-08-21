@@ -17,6 +17,14 @@ Still in progress:
 
 ![Current Image of Music Player](/public/music_player_so_far_2.png)
 
+## Iteration #3
+
+- Added search bar to playlist to allow users to search for tracks.
+- Added ability to load albums into the music player and link songs based on albumid.
+- Restyled the player.
+
+![Current Image of Music Player](/public/music_player_so_far_3.png)
+
 ---
 
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/pages/api-reference/create-next-app).

@@ -21,7 +21,11 @@ export default function Home() {
       </Head>
       <div className={`${styles.page} ${notoSansJP.className}`}>
         <NavBar />
-        <main className={styles.main}></main>
+        <main className={styles.main}>
+          <div className={styles.albums}>
+            <h1>Albums</h1>
+          </div>
+        </main>
 
         <footer className={styles.footer}>
           <MusicPlayer />

@@ -1,16 +1,35 @@
 import styles from "@/styles/Playlist.module.css";
+import { useState } from "react";
 
 import { Search } from "lucide-react";
 
 export default function Playlist({ songs, currentSongIndex, onLoadSong }) {
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const handleSearchChange = (event) => {
+    // Convert the input value to lowercase for case-insensitive searching.
+    setSearchTerm(event.target.value.toLowerCase());
+  };
+
+  const filteredSongs = songs.filter(
+    (item) =>
+      item.title.toLowerCase().includes(searchTerm) ||
+      item.artist.toLowerCase().includes(searchTerm)
+  );
+
   return (
     <div className={styles.main}>
       <div className={styles.search}>
-        Search bar goes here
+        <input
+          type="text"
+          placeholder="Search by title or artist..."
+          onChange={handleSearchChange}
+          value={searchTerm}
+        />
         <Search size={20} strokeWidth={3} />
       </div>
       <ul id="playlist" className={styles.playlist}>
-        {songs.map((song, index) => (
+        {filteredSongs.map((song, index) => (
           <li
             key={song.songId || index} // Use songId as key if available, fallback to index
             className={currentSongIndex === index ? styles.playing : ""}

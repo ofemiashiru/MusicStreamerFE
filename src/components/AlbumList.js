@@ -34,7 +34,7 @@ export default function AlbumList({
                 <p>{album.artist}</p>
               </div>
               <div className={styles.icon}>
-                <CirclePlay size={60} strokeWidth={1} />
+                <CirclePlay size={60} strokeWidth={0.5} />
               </div>
             </li>
           ))}

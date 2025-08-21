@@ -14,7 +14,7 @@ export default function NavBar() {
       <div className={styles.navbarContainer}>
         {/* Logo or brand name */}
         <a href="#" className={styles.navbarLogo}>
-          myFi
+          myHiFi
         </a>
         {/* Burger menu icon for mobile */}
         <div className={styles.menuIcon} onClick={toggleMenu}>
@@ -34,7 +34,7 @@ export default function NavBar() {
           </li>
           <li className={styles.navItem}>
             <a href="#" className={styles.navLinks}>
-              Admin
+              Login
             </a>
           </li>
           <li className={styles.navItem}>

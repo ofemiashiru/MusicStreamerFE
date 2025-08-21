@@ -106,3 +106,27 @@
 .green {
   background-color: green;
 }
+
+@media screen and (max-width: 670px) {
+  .middle {
+    font-size: 0.5rem;
+  }
+  .volumeContainer {
+    rotate: 270deg;
+    width: 100px;
+    transition: all 5ms ease;
+  }
+  .volumeContainer > input {
+    width: 100%;
+  }
+  .volumeContainer > svg {
+    rotate: 90deg;
+    margin-top: 10px;
+  }
+  .artwork {
+    width: 50px;
+  }
+  .song {
+    display: none;
+  }
+}

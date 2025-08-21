@@ -1,7 +1,10 @@
 .albums {
   padding: 10px;
-  width: 400px;
   overflow-y: scroll;
+}
+
+.albums > ul {
+  columns: 3;
 }
 
 .album {
@@ -11,12 +14,14 @@
   cursor: pointer;
   padding: 10px;
   border-radius: 5px;
-  border: 1px solid red;
+  border: 1px solid rgb(0 0 0 / var(--opacity-80, 1));
+  transition: all 0.5s ease;
 }
 
 .album:hover {
   background-color: rgb(0 0 0 / var(--opacity-80, 1));
   color: #ffffff;
+  border: 1px solid rgb(255 255 255 / var(--opacity-80, 1));
 }
 
 .albumart {
@@ -41,4 +46,28 @@
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+@media screen and (max-width: 818px) {
+  .albums > ul {
+    columns: 2;
+  }
+}
+
+@media screen and (max-width: 670px) {
+  .album {
+    grid-template-columns: 70px auto auto;
+  }
+
+  .albuminfo > p {
+    margin-bottom: 5px;
+    font-size: 0.8rem;
+  }
+
+  .albumart {
+    width: 70px;
+  }
+  .albums > ul {
+    columns: 1;
+  }
 }

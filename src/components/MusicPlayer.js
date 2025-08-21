@@ -252,13 +252,17 @@ export default function MusicPlayer({ songs, songsStatusMessage }) {
         {/* Playback Controls */}
         <div className={styles.playback}>
           <button onClick={handlePrev}>
-            <SkipBack size={20} />
+            <SkipBack size={20} strokeWidth={1} />
           </button>
           <button onClick={togglePlayPause}>
-            {isPlaying ? <Pause size={30} /> : <Play size={30} />}
+            {isPlaying ? (
+              <Pause size={30} strokeWidth={1} />
+            ) : (
+              <Play size={30} strokeWidth={1} />
+            )}
           </button>
           <button onClick={handleNext}>
-            <SkipForward size={20} />
+            <SkipForward size={20} strokeWidth={1} />
           </button>
         </div>
         {/* Progress Bar */}

@@ -29,11 +29,13 @@ export default function Playlist({ songs, currentSongIndex, onLoadSong }) {
         <Search size={20} strokeWidth={3} />
       </div>
       <ul id="playlist" className={styles.playlist}>
-        {filteredSongs.map((song, index) => (
+        {filteredSongs.map((song) => (
           <li
-            key={song.songId || index} // Use songId as key if available, fallback to index
-            className={currentSongIndex === index ? styles.playing : ""}
-            onClick={() => onLoadSong(index)}
+            key={song.songId || song.trackNumber}
+            className={
+              currentSongIndex === song.trackNumber ? styles.playing : ""
+            }
+            onClick={() => onLoadSong(song.trackNumber)}
           >
             <div className={styles.song}>
               <div className={styles.coverBorder}>

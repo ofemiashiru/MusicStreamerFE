@@ -15,9 +15,7 @@ import styles from "@/styles/MusicPlayer.module.css";
 
 import Playlist from "./Playlist";
 
-export default function MusicPlayer() {
-  const [songs, setSongs] = useState([]);
-
+export default function MusicPlayer({ songs, songsStatusMessage }) {
   // State for the index of the currently playing song
   const [currentSongIndex, setCurrentSongIndex] = useState(0);
   // State to track if the music is currently playing
@@ -28,8 +26,6 @@ export default function MusicPlayer() {
   const [currentTime, setCurrentTime] = useState("0:00");
   // State for the total duration of the song
   const [duration, setDuration] = useState("0:00");
-  // State to show loading/error messages
-  const [statusMessage, setStatusMessage] = useState("Loading songs...");
   // State for the songVolume Icon
   const [songVolume, setSongVolume] = useState(50);
   const volumeSizeIcon = 18;
@@ -38,32 +34,6 @@ export default function MusicPlayer() {
 
   // useRef hook to get a reference to the audio HTML element
   const audioPlayer = useRef();
-
-  // useEffect hook to fetch songs from the backend API when the component mounts
-  useEffect(() => {
-    const fetchSongs = async () => {
-      try {
-        // Fetch data from the local API endpoint (assuming backend is running on same domain/port)
-        const response = await fetch("/api/songs");
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        const fetchedSongs = await response.json();
-
-        if (fetchedSongs.length > 0) {
-          setSongs(fetchedSongs);
-          // Initial load of the first song will happen when `songs` state updates
-        } else {
-          setStatusMessage("No songs found.");
-        }
-      } catch (error) {
-        console.error("Failed to fetch songs:", error);
-        setStatusMessage("Error loading songs. Is the backend running?");
-      }
-    };
-
-    fetchSongs();
-  }, []); // Empty dependency array means this effect runs only once on mount
 
   // useEffect hook to set up audio player event listeners and load current song
   useEffect(() => {
@@ -180,8 +150,57 @@ export default function MusicPlayer() {
   // Render loading/error state if no songs are fetched yet
   if (songs.length === 0) {
     return (
-      <div>
-        <p>{statusMessage}</p>
+      <div className={styles.main}>
+        <div className={styles.left}>
+          {/* Left Section */}
+          <div
+            className={
+              playlistVisible ? styles.playlistMain : styles.playlistMainHidden
+            }
+          >
+            {/* PlayList Section */}
+            <Playlist
+              songs={songs}
+              currentSongIndex={currentSongIndex}
+              onLoadSong={loadSong}
+            />
+          </div>
+          <div className={styles.artwork} onClick={togglePlaylist}>
+            {playlistVisible ? (
+              <ArrowDown size={20} className={styles.arrowIcon} />
+            ) : (
+              <ArrowUp size={20} className={styles.arrowIcon} />
+            )}
+            <img
+              id="album-art"
+              src="https://placehold.co/300x300/4B5563/F9FAFB?text=No+Cover"
+              alt="Album Art"
+            />
+          </div>
+        </div>
+        <div className={styles.middle}>
+          <h3 id="song-title" className={styles.song}>
+            <span>No song loaded</span>
+          </h3>
+          {/* Playback Controls */}
+          <div className={styles.playback}>
+            <button onClick={handlePrev} disabled>
+              <SkipBack size={20} />
+            </button>
+            <button onClick={togglePlayPause} disabled>
+              <Play size={30} />
+            </button>
+            <button onClick={handleNext} disabled>
+              <SkipForward size={20} />
+            </button>
+          </div>
+        </div>
+        <div className={styles.right}>
+          <div className={styles.volumeContainer}>
+            <VolumeX size={volumeSizeIcon} className={styles.volumeIcon} />
+            <input type="range" id="volume-slider" max="100" disabled />
+          </div>
+        </div>
       </div>
     );
   }
@@ -212,7 +231,7 @@ export default function MusicPlayer() {
           )}
           <img
             id="album-art"
-            src={currentSong.cover}
+            src={currentSong?.cover}
             alt="Album Art"
             onError={(e) =>
               (e.target.src =

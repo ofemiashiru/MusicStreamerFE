@@ -3,6 +3,7 @@ import MusicPlayer from "@/components/MusicPlayer";
 import { Noto_Sans_JP } from "next/font/google";
 import styles from "@/styles/Home.module.css";
 import NavBar from "@/components/NavBar";
+import { useEffect, useState } from "react";
 
 const notoSansJP = Noto_Sans_JP({
   subsets: ["latin"],
@@ -11,6 +12,55 @@ const notoSansJP = Noto_Sans_JP({
 });
 
 export default function Home() {
+  const [albums, setAlbums] = useState([]);
+  const [songs, setSongs] = useState([]);
+  const [albumsStatusMessage, setAlbumsStatusMessage] =
+    useState("Loading albums...");
+  const [songsStatusMessage, setSongsStatusMessage] =
+    useState("Loading songs...");
+
+  const fetchSongs = async (albumId) => {
+    try {
+      // Fetch data from the local API endpoint (assuming backend is running on same domain/port)
+      const response = await fetch(`/api/songs?albumId=${albumId}`);
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      const fetchedSongs = await response.json();
+
+      if (fetchedSongs.length > 0) {
+        setSongs(fetchedSongs);
+        // Initial load of the first song will happen when `songs` state updates
+      } else {
+        setSongsStatusMessage("No songs found.");
+      }
+    } catch (error) {
+      console.error("Failed to fetch songs:", error);
+      setSongsStatusMessage("Error loading songs. Is the backend running?");
+    }
+  };
+
+  useEffect(() => {
+    const fetchAlbums = async () => {
+      try {
+        const response = await fetch("/api/albums");
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const fetchedAlbums = await response.json();
+        if (fetchedAlbums.length > 0) {
+          setAlbums(fetchedAlbums);
+        } else {
+          setAlbumsStatusMessage("No albums found.");
+        }
+      } catch (error) {
+        console.error("Failed to fetch albums:", error);
+        setAlbumsStatusMessage("Error loading albums. Is the backend running?");
+      }
+    };
+    fetchAlbums();
+  }, []);
+
   return (
     <>
       <Head>
@@ -24,11 +74,39 @@ export default function Home() {
         <main className={styles.main}>
           <div className={styles.albums}>
             <h1>Albums</h1>
+            {albums.length === 0 ? (
+              <p>{albumsStatusMessage}</p>
+            ) : (
+              <ul>
+                {albums.map((album, index) => (
+                  <li
+                    key={album.albumId || index}
+                    className={styles.album}
+                    onClick={() => fetchSongs(album.albumId)}
+                  >
+                    <div className={styles.albumart}>
+                      <img
+                        src={album.cover}
+                        alt="Album Art"
+                        onError={(e) =>
+                          (e.target.src =
+                            "https://placehold.co/100x100/4B5563/F9FAFB?text=No+Cover")
+                        } // Fallback image
+                      />
+                    </div>
+                    <div className={styles.albuminfo}>
+                      <p>{album.title}</p>
+                      <p>{album.artist}</p>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            )}
           </div>
         </main>
 
         <footer className={styles.footer}>
-          <MusicPlayer />
+          <MusicPlayer songs={songs} songsStatusMessage={songsStatusMessage} />
         </footer>
       </div>
     </>

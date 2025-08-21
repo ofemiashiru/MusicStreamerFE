@@ -41,7 +41,12 @@ export default function MusicPlayer({ songs, songsStatusMessage }) {
     if (!audio || songs.length === 0) return; // Ensure audio element and songs are available
 
     // Set the audio source whenever currentSongIndex or songs array changes
-    audio.src = songs[currentSongIndex].audio;
+    if (!songs[currentSongIndex]?.audio) {
+      setCurrentSongIndex(0);
+      return;
+    }
+
+    audio.src = songs[currentSongIndex]?.audio;
     // If already playing, attempt to play the new song immediately
     if (isPlaying) {
       audio.play().catch((e) => console.error("Error playing audio:", e));
@@ -242,7 +247,7 @@ export default function MusicPlayer({ songs, songsStatusMessage }) {
       </div>
       <div className={styles.middle}>
         <h3 id="song-title" className={styles.song}>
-          {currentSong.title} <span>by {currentSong.artist}</span>
+          {currentSong?.title} <span>by {currentSong?.artist}</span>
         </h3>
         {/* Playback Controls */}
         <div className={styles.playback}>
@@ -272,7 +277,7 @@ export default function MusicPlayer({ songs, songsStatusMessage }) {
         {/* Audio Element */}
         <audio
           ref={audioPlayer}
-          src={currentSong.audio}
+          src={currentSong?.audio}
           className="hidden"
         ></audio>
       </div>

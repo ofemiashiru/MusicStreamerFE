@@ -31,7 +31,7 @@ export default function Playlist({ songs, currentSongIndex, onLoadSong }) {
       <ul id="playlist" className={styles.playlist}>
         {filteredSongs.map((song) => (
           <li
-            key={song.songId || song.trackNumber}
+            key={song.songId}
             className={
               currentSongIndex === song.trackNumber ? styles.playing : ""
             }

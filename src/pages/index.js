@@ -1,8 +1,11 @@
 import Head from "next/head";
+import NavBar from "@/components/NavBar";
+import AlbumList from "@/components/AlbumList";
 import MusicPlayer from "@/components/MusicPlayer";
+
 import { Noto_Sans_JP } from "next/font/google";
 import styles from "@/styles/Home.module.css";
-import NavBar from "@/components/NavBar";
+
 import { useEffect, useState } from "react";
 
 const notoSansJP = Noto_Sans_JP({
@@ -70,37 +73,11 @@ export default function Home() {
       <div className={`${styles.page} ${notoSansJP.className}`}>
         <NavBar />
         <main className={styles.main}>
-          <div className={styles.albums}>
-            <h1>Albums</h1>
-            {albums.length === 0 ? (
-              <p>{albumsStatusMessage}</p>
-            ) : (
-              <ul>
-                {albums.map((album, index) => (
-                  <li
-                    key={album.albumId || index}
-                    className={styles.album}
-                    onClick={() => fetchSongs(album.albumId)}
-                  >
-                    <div className={styles.albumart}>
-                      <img
-                        src={album.cover}
-                        alt="Album Art"
-                        onError={(e) =>
-                          (e.target.src =
-                            "https://placehold.co/100x100/4B5563/F9FAFB?text=No+Cover")
-                        } // Fallback image
-                      />
-                    </div>
-                    <div className={styles.albuminfo}>
-                      <p>{album.title}</p>
-                      <p>{album.artist}</p>
-                    </div>
-                  </li>
-                ))}
-              </ul>
-            )}
-          </div>
+          <AlbumList
+            albums={albums}
+            albumsStatusMessage={albumsStatusMessage}
+            doFetchSongs={fetchSongs}
+          />
         </main>
 
         <footer className={styles.footer}>

@@ -21,7 +21,6 @@ export default function Home() {
 
   const fetchSongs = async (albumId) => {
     try {
-      // Fetch data from the local API endpoint (assuming backend is running on same domain/port)
       const response = await fetch(`/api/songs?albumId=${albumId}`);
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
@@ -30,7 +29,6 @@ export default function Home() {
 
       if (fetchedSongs.length > 0) {
         setSongs(fetchedSongs);
-        // Initial load of the first song will happen when `songs` state updates
       } else {
         setSongsStatusMessage("No songs found.");
       }

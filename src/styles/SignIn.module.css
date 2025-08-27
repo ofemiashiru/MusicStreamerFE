@@ -2,6 +2,22 @@
   padding: 10px;
 }
 
+.signin > h2 {
+  margin: 1rem;
+}
+
+.signin > form {
+  display: grid;
+  grid-row-gap: 0.5rem;
+}
+
+.signin > form > input[type="submit"],
+.signin > form > input[type="text"],
+.signin > form > input[type="password"] {
+  padding: 0.5rem;
+  font-size: 1rem;
+}
+
 .animatespin {
   animation: spin 1s linear infinite;
 }

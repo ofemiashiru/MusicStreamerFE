@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 
 import Head from "next/head";
 import NavBar from "@/components/NavBar";
@@ -9,6 +9,7 @@ import SignIn from "@/components/SignIn";
 import AddMusic from "@/components/AddMusic";
 
 import styles from "@/styles/Home.module.css";
+import modalStyles from "@/styles/Modal.module.css";
 
 import { Noto_Sans_JP } from "next/font/google";
 
@@ -33,6 +34,9 @@ export default function Home() {
     useState("Loading albums...");
   const [songsStatusMessage, setSongsStatusMessage] =
     useState("Loading songs...");
+  const [showModal, setShowModal] = useState(false);
+
+  const canShowModal = showModal && !user;
 
   const fetchSongs = async (albumId) => {
     try {
@@ -74,6 +78,10 @@ export default function Home() {
 
     if (user) fetchAlbums();
   }, [user]);
+
+  const closeModal = useCallback(() => {
+    setShowModal(false);
+  }, []);
   return (
     <>
       <Head>
@@ -83,7 +91,11 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div className={`${styles.page} ${notoSansJP.className}`}>
-        <NavBar user={user} setUser={() => setUser(null)} />
+        <NavBar
+          user={user}
+          setUser={() => setUser(null)}
+          doShowModal={() => setShowModal(true)}
+        />
         <main className={styles.main}>
           {user && groups.includes(ARTIST) && <AddMusic />}
           {user ? (
@@ -95,8 +107,17 @@ export default function Home() {
           ) : (
             ""
           )}
-          {!user && <SignIn setUser={setUser} setGroups={setGroups} />}
-          {!user && <Subscribe />}
+          {canShowModal && (
+            <div className={modalStyles.modalOverlay}>
+              <div className={modalStyles.modalContent}>
+                <span className={modalStyles.closeButton} onClick={closeModal}>
+                  &times;
+                </span>
+                {!user && <SignIn setUser={setUser} setGroups={setGroups} />}
+                {!user && <Subscribe />}
+              </div>
+            </div>
+          )}
         </main>
 
         <footer className={styles.footer}>

@@ -1,3 +1,14 @@
 .subscribe {
   padding: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.subscribe > button {
+  padding: 0.5rem;
+}
+
+.subscribe > button > span {
+  font-weight: bold;
 }

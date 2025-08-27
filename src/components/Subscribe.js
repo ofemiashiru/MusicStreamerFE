@@ -1,7 +1,5 @@
 import { loadStripe } from "@stripe/stripe-js";
 
-import { User, UserStar } from "lucide-react";
-
 import styles from "@/styles/Subscribe.module.css";
 
 export default function Subscribe() {
@@ -23,9 +21,8 @@ export default function Subscribe() {
   };
   return (
     <div className={styles.subscribe}>
-      <h1>Subscribe</h1>
       <button onClick={signInAsFan}>
-        <User size={30} />
+        Don't have an account? <span>Subscribe on Stripe</span>
       </button>
     </div>
   );

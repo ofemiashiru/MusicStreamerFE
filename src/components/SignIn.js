@@ -88,6 +88,7 @@ export default function SignIn({ setUser, setGroups }) {
         const userGroups = session.tokens.idToken.payload["cognito:groups"];
 
         setUser(currentUser);
+        setGroups(userGroups);
         setIsNewPasswordRequired(false);
         setIsLoading(false);
       } else {
@@ -110,8 +111,9 @@ export default function SignIn({ setUser, setGroups }) {
   };
   return (
     <div className={styles.signin}>
-      <h1>Sign In</h1>
-      {isLoading && <LoaderCircle className={styles.animatespin} />}
+      <h2>
+        Log in {isLoading && <LoaderCircle className={styles.animatespin} />}
+      </h2>
       {error && <p className={styles.error}>{error}</p>}
       {!isNewPasswordRequired ? (
         // Render the regular sign-in form

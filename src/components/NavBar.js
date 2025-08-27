@@ -2,7 +2,7 @@ import styles from "@/styles/NavBar.module.css";
 import { useState } from "react";
 import { signOut } from "aws-amplify/auth";
 
-export default function NavBar({ user, setUser }) {
+export default function NavBar({ user, setUser, doShowModal }) {
   // State to manage the visibility of the mobile menu.
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -45,7 +45,7 @@ export default function NavBar({ user, setUser }) {
             </a>
           </li>
 
-          {!user?.username ? (
+          {user?.username ? (
             <li className={styles.navItem}>
               <button onClick={LogOut} className={styles.navLinksBtn}>
                 {" "}
@@ -53,7 +53,11 @@ export default function NavBar({ user, setUser }) {
               </button>
             </li>
           ) : (
-            ""
+            <li className={styles.navItem}>
+              <button onClick={doShowModal} className={styles.navLinksBtn}>
+                Log in
+              </button>
+            </li>
           )}
         </ul>
       </div>

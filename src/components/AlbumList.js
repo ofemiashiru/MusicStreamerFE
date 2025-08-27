@@ -1,19 +1,35 @@
+import { useState } from "react";
 import styles from "@/styles/AlbumList.module.css";
 import { CirclePlay } from "lucide-react";
+import SearchBar from "./SearchBar";
 
 export default function AlbumList({
   albums,
   albumsStatusMessage,
   doFetchSongs,
 }) {
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const handleSearchChange = (event) => {
+    // Convert the input value to lowercase for case-insensitive searching.
+    setSearchTerm(event.target.value.toLowerCase());
+  };
+
+  const filteredAlbums = albums.filter((item) =>
+    item.title.toLowerCase().includes(searchTerm)
+  );
   return (
     <div className={styles.albums}>
-      <h1>Albums</h1>
-      {albums.length === 0 ? (
+      <SearchBar
+        placeholder="Search by title..."
+        searchTerm={searchTerm}
+        handleSearchChange={handleSearchChange}
+      />
+      {filteredAlbums.length === 0 ? (
         <p>{albumsStatusMessage}</p>
       ) : (
         <ul>
-          {albums.map((album) => (
+          {filteredAlbums.map((album) => (
             <li
               key={album.albumId}
               className={styles.album}

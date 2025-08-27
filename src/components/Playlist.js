@@ -1,7 +1,6 @@
+import SearchBar from "./SearchBar";
 import styles from "@/styles/Playlist.module.css";
 import { useState } from "react";
-
-import { Search } from "lucide-react";
 
 export default function Playlist({ songs, currentSongIndex, onLoadSong }) {
   const [searchTerm, setSearchTerm] = useState("");
@@ -19,15 +18,12 @@ export default function Playlist({ songs, currentSongIndex, onLoadSong }) {
 
   return (
     <div className={styles.main}>
-      <div className={styles.search}>
-        <input
-          type="text"
-          placeholder="Search by title or artist..."
-          onChange={handleSearchChange}
-          value={searchTerm}
-        />
-        <Search size={20} strokeWidth={3} />
-      </div>
+      <SearchBar
+        placeholder="Search by title or artist..."
+        searchTerm={searchTerm}
+        handleSearchChange={handleSearchChange}
+        backgroundColor="rgb(0 0 0 / var(--opacity-80, 1))"
+      />
       <ul id="playlist" className={styles.playlist}>
         {filteredSongs.map((song) => (
           <li

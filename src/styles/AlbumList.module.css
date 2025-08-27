@@ -1,6 +1,5 @@
 .albums {
   padding: 10px;
-  overflow-y: scroll;
 }
 
 .albums > ul {

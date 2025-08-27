@@ -1,7 +1,8 @@
 import styles from "@/styles/NavBar.module.css";
 import { useState } from "react";
+import { signOut } from "aws-amplify/auth";
 
-export default function NavBar() {
+export default function NavBar({ user, setUser }) {
   // State to manage the visibility of the mobile menu.
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -9,12 +10,23 @@ export default function NavBar() {
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
+
+  // Function to log out
+  const LogOut = async (e) => {
+    e.preventDefault();
+    try {
+      await signOut();
+      setUser(null);
+    } catch (error) {
+      console.log("error signing out: ", error);
+    }
+  };
   return (
     <nav className={styles.navbar}>
       <div className={styles.navbarContainer}>
         {/* Logo or brand name */}
-        <a href="#" className={styles.navbarLogo}>
-          myHiFi
+        <a href="/" className={styles.navbarLogo}>
+          OG
         </a>
         {/* Burger menu icon for mobile */}
         <div className={styles.menuIcon} onClick={toggleMenu}>
@@ -29,19 +41,20 @@ export default function NavBar() {
         >
           <li className={styles.navItem}>
             <a href="#" className={styles.navLinks}>
-              Home
-            </a>
-          </li>
-          <li className={styles.navItem}>
-            <a href="#" className={styles.navLinks}>
-              Login
-            </a>
-          </li>
-          <li className={styles.navItem}>
-            <a href="#" className={styles.navLinks}>
               Contact
             </a>
           </li>
+
+          {!user?.username ? (
+            <li className={styles.navItem}>
+              <button onClick={LogOut} className={styles.navLinksBtn}>
+                {" "}
+                Log out {user?.username}
+              </button>
+            </li>
+          ) : (
+            ""
+          )}
         </ul>
       </div>
     </nav>

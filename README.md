@@ -25,6 +25,13 @@ Still in progress:
 
 ![Current Image of Music Player](/public/music_player_so_far_3.png)
 
+## Iteration #4
+
+- Added ability to subscribe via stripe and log in via cognito
+- Added search bar to albums
+
+![Current Image of Music Player](/public/music_player_so_far_4.png)
+
 ---
 
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/pages/api-reference/create-next-app).

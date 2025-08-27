@@ -7,7 +7,7 @@ export default function handler(req, res) {
       albumId: "4242231b-69ab-43fd-aebe-119b76366440",
       trackNumber: 0,
       title: "Rich Mans World",
-      artist: "Spice Cabinet feat Nas",
+      artist: "Ajasko",
       audio:
         "https://album-audio-mp.s3.eu-west-1.amazonaws.com/ReggieNelson.wav",
       cover:
@@ -18,7 +18,7 @@ export default function handler(req, res) {
       albumId: "4242231b-69ab-43fd-aebe-119b76366440",
       trackNumber: 1,
       title: "Disco",
-      artist: "Spice Cabinet feat AZ",
+      artist: "Ajasko",
       audio: "https://album-audio-mp.s3.eu-west-1.amazonaws.com/Disco.wav",
       cover:
         "https://album-art-work-mp.s3.eu-west-1.amazonaws.com/spice_cabinet_artwork.jpg",
@@ -28,7 +28,7 @@ export default function handler(req, res) {
       albumId: "4242231b-69ab-43fd-aebe-119b76366440",
       trackNumber: 2,
       title: "Hard To List",
-      artist: "Spice Cabinet feat Kool G Rap",
+      artist: "Ajasko",
       audio: "https://album-audio-mp.s3.eu-west-1.amazonaws.com/Hardtolist.wav",
       cover:
         "https://album-art-work-mp.s3.eu-west-1.amazonaws.com/spice_cabinet_artwork.jpg",
@@ -38,7 +38,7 @@ export default function handler(req, res) {
       albumId: "4242231b-69ab-43fd-aebe-119b76366440",
       trackNumber: 3,
       title: "Hurting",
-      artist: "Spice Cabinet feat Black Thought",
+      artist: "Ajasko",
       audio:
         "https://album-audio-mp.s3.eu-west-1.amazonaws.com/HurtinIGive.wav",
       cover:
@@ -49,7 +49,7 @@ export default function handler(req, res) {
       albumId: "4242231b-69ab-43fd-aebe-119b76366440",
       trackNumber: 4,
       title: "Rush The Stage",
-      artist: "Spice Cabinet feat Sean Price",
+      artist: "Ajasko",
       audio:
         "https://album-audio-mp.s3.eu-west-1.amazonaws.com/RushTheStage.wav",
       cover:

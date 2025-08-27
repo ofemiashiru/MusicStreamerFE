@@ -34,6 +34,11 @@ a {
   text-decoration: none;
 }
 
+button,
+input[type="submit"] {
+  cursor: pointer;
+}
+
 @media (prefers-color-scheme: dark) {
   html {
     color-scheme: dark;

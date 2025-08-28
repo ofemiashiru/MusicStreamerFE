@@ -118,23 +118,29 @@ export default function SignIn({ setUser, setGroups }) {
       {!isNewPasswordRequired ? (
         // Render the regular sign-in form
         <form onSubmit={logIn}>
+          <label className={styles.formLabel} htmlFor="username">
+            Username
+          </label>
           <input
+            id="username"
             type="text"
             name="username"
-            placeholder="Username"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             required
           />
+          <label className={styles.formLabel} htmlFor="password">
+            Password
+          </label>
           <input
+            id="password"
             type="password"
             name="password"
-            placeholder="Password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
           />
-          <input type="submit" value="Log In" />
+          <input type="submit" value="Log in" />
         </form>
       ) : (
         // Render the new password form

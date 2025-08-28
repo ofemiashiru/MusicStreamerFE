@@ -39,12 +39,6 @@ export default function NavBar({ user, setUser, doShowModal }) {
             isMenuOpen ? styles.navMenuShown : ""
           }`}
         >
-          <li className={styles.navItem}>
-            <a href="#" className={styles.navLinks}>
-              Contact
-            </a>
-          </li>
-
           {user?.username ? (
             <li className={styles.navItem}>
               <button onClick={LogOut} className={styles.navLinksBtn}>
@@ -59,6 +53,11 @@ export default function NavBar({ user, setUser, doShowModal }) {
               </button>
             </li>
           )}
+          <li className={styles.navItem}>
+            <a href="#" className={styles.navLinks}>
+              Contact
+            </a>
+          </li>
         </ul>
       </div>
     </nav>

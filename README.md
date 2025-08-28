@@ -32,6 +32,14 @@ Still in progress:
 
 ![Current Image of Music Player](/public/music_player_so_far_4.png)
 
+## Iteration #5
+
+- Added Modal for Login
+- Added Stripe component
+- Redesign log in form
+
+![Current Image of Music Player](/public/music_player_so_far_5.png)
+
 ---
 
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/pages/api-reference/create-next-app).

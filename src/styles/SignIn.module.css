@@ -18,6 +18,14 @@
   font-size: 1rem;
 }
 
+.formLabel {
+  display: flex;
+  font-size: 0.8rem;
+  margin: 0;
+  padding: 0;
+  font-weight: bold;
+}
+
 .animatespin {
   animation: spin 1s linear infinite;
 }

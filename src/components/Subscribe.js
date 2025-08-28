@@ -1,4 +1,5 @@
 import { loadStripe } from "@stripe/stripe-js";
+import StripeLogo from "./StripeLogo";
 
 import styles from "@/styles/Subscribe.module.css";
 
@@ -22,7 +23,7 @@ export default function Subscribe() {
   return (
     <div className={styles.subscribe}>
       <button onClick={signInAsFan}>
-        Don't have an account? <span>Subscribe on Stripe</span>
+        No account? Sign up with <StripeLogo />
       </button>
     </div>
   );

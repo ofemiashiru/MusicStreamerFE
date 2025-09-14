@@ -6,7 +6,8 @@ import AlbumList from "@/components/AlbumList";
 import MusicPlayer from "@/components/MusicPlayer";
 import Subscribe from "@/components/Subscribe";
 import SignIn from "@/components/SignIn";
-import AddMusic from "@/components/AddMusic";
+import NewsCarousel from "@/components/NewsCarousel";
+import Events from "@/components/Events";
 
 import styles from "@/styles/Home.module.css";
 import modalStyles from "@/styles/Modal.module.css";
@@ -20,14 +21,16 @@ const notoSansJP = Noto_Sans_JP({
 });
 
 import { Amplify } from "aws-amplify";
+import { fetchAuthSession } from "aws-amplify/auth";
 import config from "../amplifyconfiguration.json";
 Amplify.configure(config);
 
 export default function Home() {
   const ARTIST = "artist";
   const FAN = "fan";
-  const [user, setUser] = useState(null);
-  const [groups, setGroups] = useState([]);
+
+  const [session, setSession] = useState(null);
+
   const [albums, setAlbums] = useState([]);
   const [songs, setSongs] = useState([]);
   const [albumsStatusMessage, setAlbumsStatusMessage] =
@@ -36,7 +39,7 @@ export default function Home() {
     useState("Loading songs...");
   const [showModal, setShowModal] = useState(false);
 
-  const canShowModal = showModal && !user;
+  const canShowModal = showModal && !session;
 
   const fetchSongs = async (albumId) => {
     try {
@@ -75,13 +78,27 @@ export default function Home() {
         setAlbumsStatusMessage("Error loading albums. Is the backend running?");
       }
     };
+    if (session) fetchAlbums();
+  }, [session]);
 
-    if (user) fetchAlbums();
-  }, [user]);
+  useEffect(() => {
+    const restoreSession = async () => {
+      try {
+        const authSession = await fetchAuthSession();
+        setSession(authSession);
+      } catch (error) {
+        // Handle no session found or other errors
+        setSession(null);
+        console.log("Error fetching auth session:", error);
+      }
+    };
+    restoreSession();
+  }, []);
 
   const closeModal = useCallback(() => {
     setShowModal(false);
   }, []);
+
   return (
     <>
       <Head>
@@ -92,36 +109,38 @@ export default function Home() {
       </Head>
       <div className={`${styles.page} ${notoSansJP.className}`}>
         <NavBar
-          user={user}
-          setUser={() => setUser(null)}
+          session={session}
+          setSession={() => setSession(null)}
           doShowModal={() => setShowModal(true)}
         />
         <main className={styles.main}>
-          {user && groups.includes(ARTIST) && <AddMusic />}
-          {user ? (
+          {/* This shows if user is logged in or not logged in */}
+          <NewsCarousel />
+          <Events />
+
+          {session && (
             <AlbumList
               albums={albums}
               albumsStatusMessage={albumsStatusMessage}
               doFetchSongs={fetchSongs}
             />
-          ) : (
-            ""
           )}
+
           {canShowModal && (
             <div className={modalStyles.modalOverlay}>
               <div className={modalStyles.modalContent}>
                 <span className={modalStyles.closeButton} onClick={closeModal}>
                   &times;
                 </span>
-                {!user && <SignIn setUser={setUser} setGroups={setGroups} />}
-                {!user && <Subscribe />}
+                {!session && <SignIn setSession={setSession} />}
+                {!session && <Subscribe />}
               </div>
             </div>
           )}
         </main>
 
         <footer className={styles.footer}>
-          {user ? (
+          {session ? (
             <MusicPlayer
               songs={songs}
               songsStatusMessage={songsStatusMessage}

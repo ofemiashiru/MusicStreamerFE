@@ -2,14 +2,9 @@ import { useState } from "react";
 import styles from "@/styles/SignIn.module.css";
 import { LoaderCircle } from "lucide-react";
 
-import {
-  signIn,
-  getCurrentUser,
-  confirmSignIn,
-  fetchAuthSession,
-} from "aws-amplify/auth";
+import { signIn, confirmSignIn, fetchAuthSession } from "aws-amplify/auth";
 
-export default function SignIn({ setUser, setGroups }) {
+export default function SignIn({ setGroups, setSession }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
@@ -39,13 +34,9 @@ export default function SignIn({ setUser, setGroups }) {
         // Note: You may need to fetch the userId from the authenticated user object.
         // For example: const { userId } = await getCurrentUser();
         // For now, using a placeholder.
-        const currentUser = await getCurrentUser();
 
         const session = await fetchAuthSession();
-        const userGroups = session.tokens.idToken.payload["cognito:groups"];
-
-        setUser(currentUser);
-        setGroups(userGroups);
+        setSession(session);
         setIsLoading(false);
       } else if (
         nextStep.signInStep === "CONFIRM_SIGN_IN_WITH_NEW_PASSWORD_REQUIRED"
@@ -83,12 +74,9 @@ export default function SignIn({ setUser, setGroups }) {
 
       if (isSignedIn) {
         // If sign-in is complete after confirming, set the user.
-        const currentUser = await getCurrentUser();
         const session = await fetchAuthSession();
-        const userGroups = session.tokens.idToken.payload["cognito:groups"];
 
-        setUser(currentUser);
-        setGroups(userGroups);
+        setSession(session);
         setIsNewPasswordRequired(false);
         setIsLoading(false);
       } else {

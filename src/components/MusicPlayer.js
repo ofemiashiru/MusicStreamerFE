@@ -15,7 +15,7 @@ import styles from "@/styles/MusicPlayer.module.css";
 
 import Playlist from "./Playlist";
 
-export default function MusicPlayer({ songs, songsStatusMessage }) {
+export default function MusicPlayer({ songs }) {
   // State for the index of the currently playing song
   const [currentSongIndex, setCurrentSongIndex] = useState(0);
   // State to track if the music is currently playing

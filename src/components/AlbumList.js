@@ -20,6 +20,7 @@ export default function AlbumList({
   );
   return (
     <div className={styles.albums}>
+      <h2 className={styles.albumsheader}>Songs</h2>
       <SearchBar
         placeholder="Search by title..."
         searchTerm={searchTerm}

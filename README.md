@@ -40,7 +40,14 @@ Still in progress:
 
 ![Current Image of Music Player](/public/music_player_so_far_5.png)
 
----
+## Iteration #6
+
+- Update Hero section
+- Fix session dropping out on refresh
+- Make more responsive
+- Add events
+
+![Current Image of Music Player](/public/music_player_so_far_6.png)
 
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/pages/api-reference/create-next-app).
 

@@ -3,6 +3,13 @@ import StripeLogo from "./StripeLogo";
 
 import styles from "@/styles/Subscribe.module.css";
 
+import { Noto_Sans_JP } from "next/font/google";
+const notoSansJP = Noto_Sans_JP({
+  subsets: ["latin"],
+  weight: ["100", "400", "700", "900"],
+  display: "swap",
+});
+
 export default function Subscribe() {
   const signInAsFan = async () => {
     const stripe = await loadStripe(
@@ -16,13 +23,13 @@ export default function Subscribe() {
         },
       ],
       mode: "subscription",
-      successUrl: "http://localhost:3000",
+      successUrl: "http://localhost:3000/subscription-confirmation",
       cancelUrl: "http://localhost:3000",
     });
   };
   return (
     <div className={styles.subscribe}>
-      <button onClick={signInAsFan}>
+      <button onClick={signInAsFan} className={notoSansJP.className}>
         No account? Sign up with <StripeLogo />
       </button>
     </div>

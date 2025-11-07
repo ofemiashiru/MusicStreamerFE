@@ -1,10 +1,26 @@
 .albums {
-  margin-bottom: 200px;
+  background-color: rgb(0 0 0 / var(--opacity-90, 1));
+  position: fixed;
+  top: 0px;
+  width: 100%;
+  z-index: 999;
+}
+
+.albumsClosed {
+  top: -235px;
 }
 
 .albums > ul {
-  columns: 3;
-  margin: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  overflow-y: scroll;
+  max-height: 165px;
+}
+
+.albums > ul > li {
+  flex: 33%;
+  margin: 0.75rem;
+  border: 1px solid rgb(133, 133, 133);
 }
 
 .albumsheader {
@@ -25,7 +41,7 @@
 }
 
 .album:hover {
-  background-color: rgb(0 0 0 / var(--opacity-80, 1));
+  background-color: #757575;
   color: #ffffff;
 }
 
@@ -39,6 +55,7 @@
 
 .albuminfo {
   margin-left: 5px;
+  color: #ffffff;
 }
 
 .albuminfo > p {
@@ -50,17 +67,42 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  color: #ffffff;
+}
+
+.albumlisttoggle {
+  padding: 0.5rem;
+  border: none;
+  transition: 0.4s;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.albumlisttoggle:hover {
+  background-color: rgb(0 0 0 / var(--opacity-90, 1));
+  transition: 0.4s;
 }
 
 @media screen and (max-width: 818px) {
   .albums > ul {
-    columns: 2;
+    display: block;
+  }
+  .albums > ul {
+    max-height: 235px;
+  }
+  .albumsClosed {
+    top: -305px;
   }
 }
 
 @media screen and (max-width: 670px) {
   .album {
     grid-template-columns: 70px auto auto;
+  }
+
+  .albums > ul {
+    max-height: 135px;
   }
 
   .albuminfo > p {
@@ -71,7 +113,8 @@
   .albumart {
     width: 70px;
   }
-  .albums > ul {
-    columns: 1;
+
+  .albumsClosed {
+    top: -205px;
   }
 }

@@ -2,7 +2,11 @@ import SearchBar from "./SearchBar";
 import styles from "@/styles/Playlist.module.css";
 import { useState } from "react";
 
-export default function Playlist({ songs, currentSongIndex, onLoadSong }) {
+import { useMusicPlayer } from "@/context/MusicPlayerContext";
+
+export default function Playlist({ onLoadSong }) {
+  const { songs, currentSong } = useMusicPlayer();
+
   const [searchTerm, setSearchTerm] = useState("");
 
   const handleSearchChange = (event) => {
@@ -19,18 +23,17 @@ export default function Playlist({ songs, currentSongIndex, onLoadSong }) {
   return (
     <div className={styles.main}>
       <SearchBar
-        placeholder="Search by title or artist..."
+        name="track"
+        placeholder="Track by title or artist..."
         searchTerm={searchTerm}
         handleSearchChange={handleSearchChange}
         backgroundColor="rgb(0 0 0 / var(--opacity-80, 1))"
       />
       <ul id="playlist" className={styles.playlist}>
-        {filteredSongs.map((song) => (
+        {filteredSongs.map((song, index) => (
           <li
             key={song.songId}
-            className={
-              currentSongIndex === song.trackNumber ? styles.playing : ""
-            }
+            className={currentSong?.trackNumber === index ? styles.playing : ""}
             onClick={() => onLoadSong(song.trackNumber)}
           >
             <div className={styles.song}>

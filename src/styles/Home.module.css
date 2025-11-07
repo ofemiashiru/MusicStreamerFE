@@ -23,6 +23,20 @@
 }
 
 .footer {
+  text-align: center;
+}
+
+.footer p {
+  font-size: 0.75rem;
+}
+
+.socials {
+  display: flex;
+  justify-content: center;
+}
+
+.socials svg {
+  margin: 0.25rem;
 }
 
 /* Enable hover only on non-touch devices */

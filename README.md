@@ -7,7 +7,7 @@ Still in progress:
 
 ## Iteration #1
 
-![Current Image of Music Player](/public/music_player_so_far.png)
+![Current Image of Music Player](/README_files/music_player_so_far.png)
 
 ## Iteration #2
 
@@ -15,7 +15,7 @@ Still in progress:
 - Repositioned playlist so that it appears when the album art in the bottom left is clicked.
 - Restyled the player colours and icons.
 
-![Current Image of Music Player](/public/music_player_so_far_2.png)
+![Current Image of Music Player](/README_files/music_player_so_far_2.png)
 
 ## Iteration #3
 
@@ -23,14 +23,14 @@ Still in progress:
 - Added ability to load albums into the music player and link songs based on albumid.
 - Restyled the player.
 
-![Current Image of Music Player](/public/music_player_so_far_3.png)
+![Current Image of Music Player](/README_files/music_player_so_far_3.png)
 
 ## Iteration #4
 
 - Added ability to subscribe via stripe and log in via cognito
 - Added search bar to albums
 
-![Current Image of Music Player](/public/music_player_so_far_4.png)
+![Current Image of Music Player](/README_files/music_player_so_far_4.png)
 
 ## Iteration #5
 
@@ -38,7 +38,7 @@ Still in progress:
 - Added Stripe component
 - Redesign log in form
 
-![Current Image of Music Player](/public/music_player_so_far_5.png)
+![Current Image of Music Player](/README_files/music_player_so_far_5.png)
 
 ## Iteration #6
 
@@ -47,7 +47,7 @@ Still in progress:
 - Make more responsive
 - Add events
 
-![Current Image of Music Player](/public/music_player_so_far_6.png)
+![Current Image of Music Player](/README_files/music_player_so_far_6.png)
 
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/pages/api-reference/create-next-app).
 

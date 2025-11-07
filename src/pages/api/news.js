@@ -4,17 +4,23 @@ export default function handler(req, res) {
   res.status(200).json([
     {
       id: 1,
-      headLine: "The Head Line",
-      link: "https://www.google.com",
-      image:
-        "https://album-art-work-mp.s3.eu-west-1.amazonaws.com/spice_cabinet_artwork.jpg",
+      description: "solomons garden - welcome to the garden",
+      link: "#",
+      image: "https://f4.bcbits.com/img/a3830138749_10.jpg",
     },
     {
       id: 2,
-      headLine: "The Head Line 2",
-      link: "https://www.google.com",
+      description: "nyashe munashe - fini ep",
+      link: "#",
       image:
-        "https://album-art-work-mp.s3.eu-west-1.amazonaws.com/spice_cabinet_artwork.jpg",
+        "/images/564202444_18533715448034768_5754189584800487764_nyashe_fini.jpg",
+    },
+    {
+      id: 3,
+      description: "solomons garden - how did we get here",
+      link: "#",
+      image:
+        "https://sweetsoulshop.com/cdn/shop/products/Solomons_Garden_HDWGH_jacket.jpg",
     },
   ]);
 }

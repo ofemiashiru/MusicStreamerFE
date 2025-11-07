@@ -8,8 +8,7 @@ export default function handler(req, res) {
       trackNumber: 0,
       title: "Rich Mans World",
       artist: "Ajasko",
-      audio:
-        "https://album-audio-mp.s3.eu-west-1.amazonaws.com/ReggieNelson.wav",
+      manifestKey: "Gas/Gas",
       cover:
         "https://album-art-work-mp.s3.eu-west-1.amazonaws.com/spice_cabinet_artwork.jpg",
     },
@@ -19,7 +18,7 @@ export default function handler(req, res) {
       trackNumber: 1,
       title: "Disco",
       artist: "Ajasko",
-      audio: "https://album-audio-mp.s3.eu-west-1.amazonaws.com/Disco.wav",
+      manifestKey: "Gas/Gas",
       cover:
         "https://album-art-work-mp.s3.eu-west-1.amazonaws.com/spice_cabinet_artwork.jpg",
     },
@@ -29,7 +28,7 @@ export default function handler(req, res) {
       trackNumber: 2,
       title: "Hard To List",
       artist: "Ajasko",
-      audio: "https://album-audio-mp.s3.eu-west-1.amazonaws.com/Hardtolist.wav",
+      manifestKey: "Gas/Gas",
       cover:
         "https://album-art-work-mp.s3.eu-west-1.amazonaws.com/spice_cabinet_artwork.jpg",
     },
@@ -39,8 +38,7 @@ export default function handler(req, res) {
       trackNumber: 3,
       title: "Hurting",
       artist: "Ajasko",
-      audio:
-        "https://album-audio-mp.s3.eu-west-1.amazonaws.com/HurtinIGive.wav",
+      manifestKey: "Gas/Gas",
       cover:
         "https://album-art-work-mp.s3.eu-west-1.amazonaws.com/spice_cabinet_artwork.jpg",
     },
@@ -50,8 +48,7 @@ export default function handler(req, res) {
       trackNumber: 4,
       title: "Rush The Stage",
       artist: "Ajasko",
-      audio:
-        "https://album-audio-mp.s3.eu-west-1.amazonaws.com/RushTheStage.wav",
+      manifestKey: "Gas/Gas",
       cover:
         "https://album-art-work-mp.s3.eu-west-1.amazonaws.com/spice_cabinet_artwork.jpg",
     },
@@ -59,18 +56,15 @@ export default function handler(req, res) {
       songId: "aNh92e1a-8bbe-42e8-769c-f842c513acd7",
       albumId: "6742231b-69ab-43fd-aebe-119b76361040",
       trackNumber: 0,
-      title: "A Different Song",
-      artist: "Spice Cabinet",
-      audio:
-        "https://album-audio-mp.s3.eu-west-1.amazonaws.com/RushTheStage.wav",
+      title: "Invisible Empires",
+      artist: "MKFWI feat. Ajasko",
+      manifestKey: "Gas/Gas",
       cover:
-        "https://album-art-work-mp.s3.eu-west-1.amazonaws.com/spice_cabinet_artwork.jpg",
+        "https://album-art-work-mp.s3.eu-west-1.amazonaws.com/Gemini_Generated_Image_fem3sbfem3sbfem3.png",
     },
   ];
 
   const { albumId } = req.query;
-
-  console.log(albumId);
 
   if (!albumId) {
     // If no albumId is provided, return an error or all songs

@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import {
   Play,
   Pause,
@@ -7,19 +7,28 @@ import {
   VolumeX,
   Volume1,
   Volume2,
-  ArrowDown,
-  ArrowUp,
 } from "lucide-react";
 
 import styles from "@/styles/MusicPlayer.module.css";
 
 import Playlist from "./Playlist";
 
-export default function MusicPlayer({ songs }) {
+import { useMusicPlayer } from "@/context/MusicPlayerContext";
+
+export default function MusicPlayer(/*{ songs }*/) {
+  const {
+    songs,
+    songsStatusMessage,
+    isPlaying,
+    setIsPlaying,
+    audioPlayer, // Exposed Ref from Music context
+    togglePlayPause,
+    playSong,
+    currentSong,
+  } = useMusicPlayer();
+
   // State for the index of the currently playing song
   const [currentSongIndex, setCurrentSongIndex] = useState(0);
-  // State to track if the music is currently playing
-  const [isPlaying, setIsPlaying] = useState(false);
   // State for the audio player's progress (0-100)
   const [progress, setProgress] = useState(0);
   // State for the current time of the song
@@ -27,30 +36,20 @@ export default function MusicPlayer({ songs }) {
   // State for the total duration of the song
   const [duration, setDuration] = useState("0:00");
   // State for the songVolume Icon
-  const [songVolume, setSongVolume] = useState(50);
-  const volumeSizeIcon = 18;
+  const [songVolume, setSongVolume] = useState(100);
+  const volumeSizeIcon = 24;
   // State for playlist
   const [playlistVisible, setPlaylistVisible] = useState(false);
-
-  // useRef hook to get a reference to the audio HTML element
-  const audioPlayer = useRef();
+  // State for music player
+  const [musicPlayerVisibile, setMusicPlayerVisible] = useState(false);
+  // State for volume player
+  const [volumeVisisble, setVolumeVisible] = useState(false);
 
   // useEffect hook to set up audio player event listeners and load current song
   useEffect(() => {
     const audio = audioPlayer.current;
-    if (!audio || songs.length === 0) return; // Ensure audio element and songs are available
-
-    // Set the audio source whenever currentSongIndex or songs array changes
-    if (!songs[currentSongIndex]?.audio) {
-      setCurrentSongIndex(0);
-      return;
-    }
-
-    audio.src = songs[currentSongIndex]?.audio;
-    // If already playing, attempt to play the new song immediately
-    if (isPlaying) {
-      audio.play().catch((e) => console.error("Error playing audio:", e));
-    }
+    // if (!audio || songs.length === 0) return; // Ensure audio element and songs are available
+    if (!audio) return;
 
     // Listener for when the song's metadata is loaded
     const handleLoadedMetadata = () => {
@@ -79,23 +78,13 @@ export default function MusicPlayer({ songs }) {
       audio.removeEventListener("timeupdate", handleTimeUpdate);
       audio.removeEventListener("ended", handleSongEnd);
     };
-  }, [songs, currentSongIndex]); // Re-run effect if songs or currentSongIndex changes
-
-  // Function to handle playing/pausing the song
-  const togglePlayPause = () => {
-    const audio = audioPlayer.current;
-    if (isPlaying) {
-      audio.pause();
-    } else {
-      audio.play().catch((e) => console.error("Error playing audio:", e)); // Handle potential play errors
-    }
-    setIsPlaying(!isPlaying);
-  };
+  }, [audioPlayer, songs]); // Re-run effect if songs or currentSongIndex changes
 
   // Function to load a specific song from the playlist
   const loadSong = (index) => {
     if (index >= 0 && index < songs.length) {
       setCurrentSongIndex(index);
+      playSong(songs[index], index);
       // The useEffect hook will handle loading the new song source and playing it
     }
   };
@@ -152,68 +141,88 @@ export default function MusicPlayer({ songs }) {
     return `${minutes}:${formattedSeconds}`;
   };
 
+  // Player toggle show/hide
+  const togglePlayer = () => {
+    setMusicPlayerVisible(!musicPlayerVisibile);
+    if (!musicPlayerVisibile) {
+      setPlaylistVisible(false);
+      setVolumeVisible(false);
+    }
+  };
+
+  // Volume toggle
+  const toggleVolume = () => {
+    setVolumeVisible(!volumeVisisble);
+  };
+
+  const displaySong = currentSong || songs[0];
+
+  useEffect(() => {
+    if (!currentSong && songs.length > 0) {
+      loadSong(0);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [songs]); // Load the first song when the song list changes
+
   // Render loading/error state if no songs are fetched yet
   if (songs.length === 0) {
+    const statusText = songsStatusMessage || "No songs loaded.";
     return (
-      <div className={styles.main}>
+      <div
+        className={`${styles.main} ${
+          musicPlayerVisibile && styles.closePlayer
+        }`}
+      >
         <div className={styles.left}>
           {/* Left Section */}
           <div
             className={
               playlistVisible ? styles.playlistMain : styles.playlistMainHidden
             }
-          >
-            {/* PlayList Section */}
-            <Playlist
-              songs={songs}
-              currentSongIndex={currentSongIndex}
-              onLoadSong={loadSong}
-            />
-          </div>
-          <div className={styles.artwork} onClick={togglePlaylist}>
-            {playlistVisible ? (
-              <ArrowDown size={20} className={styles.arrowIcon} />
-            ) : (
-              <ArrowUp size={20} className={styles.arrowIcon} />
-            )}
+          ></div>
+          <div className={styles.artwork}>
             <img
               id="album-art"
-              src="https://placehold.co/300x300/4B5563/F9FAFB?text=No+Cover"
+              src="https://placehold.co/300x300/4B5563/F9FAFB?text=No+Song"
               alt="Album Art"
             />
           </div>
         </div>
         <div className={styles.middle}>
-          <h3 id="song-title" className={styles.song}>
-            <span>No song loaded</span>
-          </h3>
           {/* Playback Controls */}
           <div className={styles.playback}>
             <button onClick={handlePrev} disabled>
-              <SkipBack size={20} />
+              <SkipBack size={13} strokeWidth={2} />
             </button>
             <button onClick={togglePlayPause} disabled>
-              <Play size={30} />
+              <Play size={25} strokeWidth={1} />
             </button>
             <button onClick={handleNext} disabled>
-              <SkipForward size={20} />
+              <SkipForward size={13} strokeWidth={2} />
             </button>
           </div>
         </div>
         <div className={styles.right}>
-          <div className={styles.volumeContainer}>
-            <VolumeX size={volumeSizeIcon} className={styles.volumeIcon} />
-            <input type="range" id="volume-slider" max="100" disabled />
-          </div>
+          <button
+            className={styles.musicplayertoggle}
+            style={{
+              position: "absolute",
+              top: "-31px",
+              right: "0",
+            }}
+            onClick={togglePlayer}
+          >
+            {musicPlayerVisibile ? "open" : "close"}
+          </button>
         </div>
       </div>
     );
   }
 
-  const currentSong = songs[currentSongIndex];
-
   return (
-    <div className={styles.main}>
+    <div
+      className={`${styles.main} ${musicPlayerVisibile && styles.closePlayer}`}
+    >
       <div className={styles.left}>
         {/* Left Section */}
         <div
@@ -222,52 +231,46 @@ export default function MusicPlayer({ songs }) {
           }
         >
           {/* PlayList Section */}
-          <Playlist
-            songs={songs}
-            currentSongIndex={currentSongIndex}
-            onLoadSong={loadSong}
-          />
+          <Playlist onLoadSong={loadSong} />
         </div>
-        <div className={styles.artwork} onClick={togglePlaylist}>
-          {playlistVisible ? (
-            <ArrowDown size={20} className={styles.arrowIcon} />
-          ) : (
-            <ArrowUp size={20} className={styles.arrowIcon} />
-          )}
-          <img
-            id="album-art"
-            src={currentSong?.cover}
-            alt="Album Art"
-            onError={(e) =>
-              (e.target.src =
-                "https://placehold.co/300x300/4B5563/F9FAFB?text=No+Cover")
-            } // Fallback image
-          />
+        <div className={styles.songinfo}>
+          <div className={styles.artwork} onClick={togglePlaylist}>
+            <img
+              id="album-art"
+              src={currentSong?.cover}
+              alt="Album Art"
+              onError={(e) =>
+                (e.target.src =
+                  "https://placehold.co/300x300/4B5563/F9FAFB?text=No+Song")
+              } // Fallback image
+            />
+          </div>
+          <div className={styles.info}>
+            <p>{currentSong?.title}</p>
+            <p>{currentSong?.artist}</p>
+          </div>
         </div>
       </div>
       <div className={styles.middle}>
-        <h3 id="song-title" className={styles.song}>
-          {currentSong?.title} <span>by {currentSong?.artist}</span>
-        </h3>
         {/* Playback Controls */}
         <div className={styles.playback}>
           <button onClick={handlePrev}>
-            <SkipBack size={20} strokeWidth={1} />
+            <SkipBack size={13} strokeWidth={2} />
           </button>
           <button onClick={togglePlayPause}>
             {isPlaying ? (
-              <Pause size={30} strokeWidth={1} />
+              <Pause size={25} strokeWidth={1} />
             ) : (
-              <Play size={30} strokeWidth={1} />
+              <Play size={25} strokeWidth={1} />
             )}
           </button>
           <button onClick={handleNext}>
-            <SkipForward size={20} strokeWidth={1} />
+            <SkipForward size={13} strokeWidth={2} />
           </button>
         </div>
         {/* Progress Bar */}
         <div className={styles.progressContainer}>
-          <span>{currentTime}</span>
+          <span className={styles.time}>{currentTime}</span>
           <input
             type="range"
             id="progress-bar"
@@ -276,7 +279,7 @@ export default function MusicPlayer({ songs }) {
             max="100"
             onChange={handleSeek}
           />
-          <span>{duration}</span>
+          <span className={styles.time}>{duration}</span>
         </div>
         {/* Audio Element */}
         <audio
@@ -286,18 +289,41 @@ export default function MusicPlayer({ songs }) {
         ></audio>
       </div>
       <div className={styles.right}>
-        <div className={styles.volumeContainer}>
-          {songVolume > 60 ? (
-            <Volume2 size={volumeSizeIcon} className={styles.volumeIcon} />
-          ) : songVolume == 0 ? (
-            <VolumeX size={volumeSizeIcon} className={styles.volumeIcon} />
-          ) : (
-            <Volume1 size={volumeSizeIcon} className={styles.volumeIcon} />
-          )}
-
+        <button className={styles.musicplayertoggle} onClick={togglePlayer}>
+          {musicPlayerVisibile ? "open" : "close"}
+        </button>
+        <div className={styles.volumecontrolwrapper}>
+          <button className={styles.volumeButton} onClick={toggleVolume}>
+            {songVolume > 60 ? (
+              <Volume2
+                size={volumeSizeIcon}
+                strokeWidth={1}
+                className={styles.volumeIcon}
+              />
+            ) : songVolume == 0 ? (
+              <VolumeX
+                size={volumeSizeIcon}
+                strokeWidth={1}
+                className={styles.volumeIcon}
+              />
+            ) : (
+              <Volume1
+                size={volumeSizeIcon}
+                strokeWidth={1}
+                className={styles.volumeIcon}
+              />
+            )}
+          </button>
+        </div>
+        <div
+          className={`${styles.volumeInputSection} ${
+            volumeVisisble && styles.volumeInputShown
+          }`}
+        >
           <input
             type="range"
             id="volume-slider"
+            className={styles.volumebar}
             defaultValue={songVolume}
             max="100"
             onChange={setVolume}

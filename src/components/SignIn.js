@@ -1,11 +1,25 @@
 import { useState } from "react";
+import { useRouter, usePathname } from "next/navigation";
 import styles from "@/styles/SignIn.module.css";
 import { LoaderCircle } from "lucide-react";
 
+import { useAuth } from "@/context/AuthContext";
+
+import { Noto_Sans_JP } from "next/font/google";
+const notoSansJP = Noto_Sans_JP({
+  subsets: ["latin"],
+  weight: ["100", "400", "700", "900"],
+  display: "swap",
+});
+
 import { signIn, confirmSignIn, fetchAuthSession } from "aws-amplify/auth";
 
-export default function SignIn({ setGroups, setSession }) {
-  const [username, setUsername] = useState("");
+export default function SignIn() {
+  const { setActiveSession } = useAuth();
+  const router = useRouter();
+  const pathName = usePathname();
+
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   // New state to track if a new password is required
@@ -13,8 +27,8 @@ export default function SignIn({ setGroups, setSession }) {
 
   // New state to store the user-provided new password
   const [newPassword, setNewPassword] = useState("");
-  const [error, setError] = useState("");
 
+  const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
   const logIn = async (e) => {
@@ -24,20 +38,24 @@ export default function SignIn({ setGroups, setSession }) {
     try {
       setIsLoading(true);
       const { isSignedIn, nextStep } = await signIn({
-        username,
+        username: email,
         password,
       });
 
       if (isSignedIn) {
-        console.log("Is signed in....");
         // If sign-in is complete, set the user.
         // Note: You may need to fetch the userId from the authenticated user object.
         // For example: const { userId } = await getCurrentUser();
         // For now, using a placeholder.
 
-        const session = await fetchAuthSession();
-        setSession(session);
+        const newSession = await fetchAuthSession();
+        setActiveSession(newSession);
         setIsLoading(false);
+
+        // Redirect if user is on specific pages
+        if (pathName === "/subscription-confirmation") {
+          router.push("/");
+        }
       } else if (
         nextStep.signInStep === "CONFIRM_SIGN_IN_WITH_NEW_PASSWORD_REQUIRED"
       ) {
@@ -74,11 +92,15 @@ export default function SignIn({ setGroups, setSession }) {
 
       if (isSignedIn) {
         // If sign-in is complete after confirming, set the user.
-        const session = await fetchAuthSession();
-
-        setSession(session);
+        const newSession = await fetchAuthSession();
+        setActiveSession(newSession);
         setIsNewPasswordRequired(false);
         setIsLoading(false);
+
+        // Redirect if user is on specific pages
+        if (pathName === "/subscription-confirmation") {
+          router.push("/");
+        }
       } else {
         // Handle any other steps that may be required.
         console.log("Next step:", nextStep.signInStep);
@@ -100,35 +122,43 @@ export default function SignIn({ setGroups, setSession }) {
   return (
     <div className={styles.signin}>
       <h2>
-        Log in {isLoading && <LoaderCircle className={styles.animatespin} />}
+        Sign in {isLoading && <LoaderCircle className={styles.animatespin} />}
       </h2>
       {error && <p className={styles.error}>{error}</p>}
       {!isNewPasswordRequired ? (
         // Render the regular sign-in form
         <form onSubmit={logIn}>
-          <label className={styles.formLabel} htmlFor="username">
+          {/* <label className={styles.formLabel} htmlFor="username">
             Username
-          </label>
+          </label> */}
           <input
-            id="username"
-            type="text"
-            name="username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            id="email"
+            placeholder="Email"
+            type="email"
+            name="email"
+            className={notoSansJP.className}
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
             required
           />
-          <label className={styles.formLabel} htmlFor="password">
+          {/* <label className={styles.formLabel} htmlFor="password">
             Password
-          </label>
+          </label> */}
           <input
             id="password"
+            placeholder="Password"
             type="password"
             name="password"
+            className={notoSansJP.className}
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
           />
-          <input type="submit" value="Log in" />
+          <input
+            type="submit"
+            value="Sign in"
+            className={notoSansJP.className}
+          />
         </form>
       ) : (
         // Render the new password form
@@ -138,11 +168,16 @@ export default function SignIn({ setGroups, setSession }) {
             type="password"
             name="new-password"
             placeholder="New Password"
+            className={notoSansJP.className}
             value={newPassword}
             onChange={(e) => setNewPassword(e.target.value)}
             required
           />
-          <input type="submit" value="Set New Password" />
+          <input
+            type="submit"
+            value="Set New Password"
+            className={notoSansJP.className}
+          />
         </form>
       )}
     </div>

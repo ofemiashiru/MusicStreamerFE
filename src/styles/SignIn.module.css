@@ -1,5 +1,6 @@
 .signin {
   padding: 10px;
+  color: #000000;
 }
 
 .signin > h2 {
@@ -11,8 +12,14 @@
   grid-row-gap: 0.5rem;
 }
 
+.signin > form > input[type="submit"] {
+  background-color: #000000;
+  border: none;
+}
+
 .signin > form > input[type="submit"],
 .signin > form > input[type="text"],
+.signin > form > input[type="email"],
 .signin > form > input[type="password"] {
   padding: 0.5rem;
   font-size: 1rem;
@@ -24,6 +31,10 @@
   margin: 0;
   padding: 0;
   font-weight: bold;
+}
+
+.error {
+  margin: 1rem;
 }
 
 .animatespin {

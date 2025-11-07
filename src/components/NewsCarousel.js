@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styles from "@/styles/NewsCarousel.module.css";
 
-import { ArrowLeft, ArrowRight } from "lucide-react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 export default function NewsCarousel() {
   const [news, setNews] = useState([]);
@@ -67,21 +67,20 @@ export default function NewsCarousel() {
             className={styles.carouselWrapper}
             style={{ transform: `translateX(-${currentIndex * 100}%)` }}
           >
-            {news.map((news, index) => (
-              <div key={index} className={styles.slide}>
-                <a href={news.link} target="_blank">
-                  <img
-                    src={
-                      news.image ||
-                      "https://placehold.co/1000x1000/4B5563/F9FAFB?text=No+Cover"
-                    }
-                    alt={`Slide ${index}`}
-                    className={styles.carouselImage}
-                  />
-                  <h1 className={styles.headLine}>{news.headLine}</h1>
-                </a>
-              </div>
-            ))}
+            {news.length > 0
+              ? news.map((news, index) => (
+                  <div key={index} className={styles.slide}>
+                    <img
+                      src={
+                        news.image ||
+                        "https://placehold.co/1000x1000/4B5563/F9FAFB?text=No+Cover"
+                      }
+                      alt={`Slide ${index}`}
+                      className={styles.carouselImage}
+                    />
+                  </div>
+                ))
+              : newsStatusMessage}
           </div>
 
           {/* Previous Button */}
@@ -89,7 +88,7 @@ export default function NewsCarousel() {
             onClick={prevSlide}
             className={`${styles.navButton} ${styles.prevButton}`}
           >
-            <ArrowLeft size={20} />
+            <ChevronLeft size={30} />
           </button>
 
           {/* Next Button */}
@@ -97,21 +96,8 @@ export default function NewsCarousel() {
             onClick={nextSlide}
             className={`${styles.navButton} ${styles.nextButton}`}
           >
-            <ArrowRight size={20} />
+            <ChevronRight size={30} />
           </button>
-        </div>
-
-        {/* Slide Indicators */}
-        <div className={styles.indicatorContainer}>
-          {news.map((_, index) => (
-            <button
-              key={index}
-              onClick={() => setCurrentIndex(index)}
-              className={` ${styles.indicatorButton} ${
-                currentIndex === index ? styles.isActive : ""
-              }`}
-            />
-          ))}
         </div>
       </div>
     </>

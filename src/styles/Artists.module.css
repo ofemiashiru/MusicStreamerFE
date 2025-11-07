@@ -1,0 +1,120 @@
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.appContainer {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  padding: 1rem 1rem 0rem;
+  margin-top: 10px;
+
+  /* Animation Properties */
+  animation-name: fadeIn;
+  animation-duration: 500ms;
+  animation-timing-function: ease-in;
+  animation-fill-mode: forwards;
+}
+
+.artists {
+}
+
+.artistscontainer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.artistscontainer a {
+  margin: 1rem;
+  width: 30%;
+  position: relative;
+}
+
+.artistscontainer a img {
+  width: 100%;
+  object-fit: cover;
+  transition: all 500ms ease;
+}
+
+.artistscontainer a img:hover {
+  opacity: 0.6;
+  transition: all 500ms ease;
+}
+
+.artistheader {
+  padding: 0.75rem;
+  border-color: #ffffff;
+  border-style: solid;
+  border-left-width: 0;
+  border-right-width: 5px;
+  border-top-width: 0;
+  border-bottom-width: 5px;
+  background-color: #000000;
+  color: #ffffff;
+  width: fit-content;
+  top: 0px;
+  position: absolute;
+  z-index: 10;
+}
+
+.animatespin {
+  animation: spin 1s linear infinite;
+  margin: 50%;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media screen and (max-width: 992px) {
+  .artistscontainer a {
+    width: 40%;
+  }
+}
+
+@media screen and (max-width: 818px) {
+  .artistscontainer a {
+    width: 80%;
+  }
+  .artist a img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .artistheader {
+    top: unset;
+    bottom: 0px;
+    border-right-width: 5px;
+    border-bottom-width: unset;
+    border-top-width: 5px;
+  }
+}
+
+@media screen and (max-width: 470px) {
+  .artistscontainer a {
+    width: 100%;
+  }
+  .artistImage {
+    width: 100%;
+  }
+
+  .artistheader {
+    font-size: 0.75rem;
+  }
+
+  .artistNameHeader {
+    font-size: 1rem;
+  }
+}

@@ -1,0 +1,157 @@
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.appContainer {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  padding: 2rem 4rem;
+  margin-top: 10px;
+
+  /* Animation Properties */
+  animation-name: fadeIn;
+  animation-duration: 500ms;
+  animation-timing-function: ease-in;
+  animation-fill-mode: forwards;
+}
+
+.artist {
+  position: relative;
+  display: flex;
+}
+
+.artist div {
+  flex: 50%;
+  flex-wrap: wrap;
+}
+
+.artistNameHeader {
+  padding: 0.75rem;
+  border-color: #ffffff;
+  border-style: solid;
+  border-left-width: 0;
+  border-right-width: 5px;
+  border-top-width: 0;
+  border-bottom-width: 5px;
+  background-color: #000000;
+  color: #ffffff;
+  width: fit-content;
+  top: 0px;
+  position: absolute;
+  z-index: 10;
+}
+
+.artistInfoSection {
+  padding: 0 2rem;
+}
+
+.artistImage {
+  height: 500px;
+  width: 100%;
+  object-fit: cover;
+  object-position: top;
+}
+.artistSocials {
+  display: flex;
+}
+.artistSocials > li {
+  list-style: none;
+  margin: 0.25rem;
+}
+
+.artistSocials li svg {
+  width: 25px;
+  height: 25px;
+}
+
+.artistMusic {
+  margin: 2rem 0;
+}
+
+.artistMusic button {
+  background-color: #000000;
+  border: none;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+}
+
+.artistMusic ul li {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  width: fit-content;
+  padding: 0.5rem;
+}
+
+.artistMusic ul li span {
+  margin: 0 0.5rem;
+  border-bottom: 1px solid rgb(0 0 0 / var(--opacity-10, 1));
+  transition: 300ms ease-in-out;
+}
+
+.artistMusic ul li span:hover {
+  color: #1abc9c;
+  border-bottom: 1px solid #1abc9c;
+}
+
+@media screen and (max-width: 992px) {
+  .artistImage {
+    height: 300px;
+    width: 100%;
+    object-fit: cover;
+  }
+  .artistNameHeader {
+    font-size: 1rem;
+  }
+
+  .artistInfoSection p {
+    font-size: 0.75rem;
+  }
+}
+
+@media screen and (max-width: 818px) {
+  .appContainer {
+    padding: 2rem 2rem;
+  }
+  .artist {
+    position: relative;
+    display: block;
+  }
+  .artistInfoSection {
+    padding: 1rem 0rem;
+  }
+}
+
+@media screen and (max-width: 470px) {
+  .appContainer {
+    padding: 2rem 1rem;
+    margin-top: 10px;
+  }
+  .artistscontainer a {
+    width: 100%;
+  }
+  .artistImage {
+    height: 300px;
+    width: 100%;
+    object-fit: cover;
+    object-position: top;
+  }
+
+  .artistheader {
+    font-size: 0.75rem;
+  }
+
+  .artistNameHeader {
+    font-size: 0.75rem;
+  }
+
+  .artistMusic ul li span {
+    font-size: 0.75rem;
+  }
+}

@@ -1,0 +1,51 @@
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.container {
+  animation: fadeIn;
+  animation-duration: 1s;
+  font-size: 1.3rem;
+  margin-top: 150px;
+  margin-left: 150px;
+  margin-right: 150px;
+  transition: 0.4s;
+}
+
+.container p {
+  margin: 30px;
+}
+
+.email > span {
+  font-weight: 400;
+}
+
+.email > a {
+  border-bottom: 1px solid rgb(0 0 0 / var(--opacity-10, 1));
+}
+
+.email > a:hover {
+  border-bottom: 1px solid #1abc9c;
+}
+
+@media screen and (max-width: 850px) {
+  .container {
+    font-size: 1rem;
+    margin-top: 100px;
+    margin-left: 0;
+    margin-right: 0;
+    transition: 0.4s;
+  }
+}
+
+@media screen and (max-width: 344px) {
+  .email {
+    font-size: 0.75rem;
+    text-align: center;
+  }
+}

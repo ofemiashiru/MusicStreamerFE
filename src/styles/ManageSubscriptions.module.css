@@ -1,0 +1,29 @@
+.manage {
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: fit-content;
+}
+
+.manage > button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.1rem;
+  width: 100%;
+  font-size: 1rem;
+  background-color: #000000;
+  border: none;
+  transition: all 0.3s ease-in-out;
+}
+
+.manage > button:hover {
+  color: #1abc9c;
+}
+
+@media screen and (max-width: 768px) {
+  .manage > button {
+    padding: 0.25rem;
+  }
+}

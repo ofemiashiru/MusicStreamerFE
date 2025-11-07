@@ -1,0 +1,86 @@
+export default function handler(req, res) {
+  // 1. Get the slug from the URL query parameters
+  const { slug } = req.query;
+
+  const artistsData = [
+    {
+      id: 1,
+      name: "MKFWI",
+      slug: "mkfwi",
+      image: "/images/611e87a5-a818-4fe8-a310-e738858d7949-MKFWI.jpg",
+      shortBio:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse consequat dictum orci. Fusce sed odio id dui consectetur pretium. Cras ullamcorper eu nisl maximus ultrices. Vivamus vel purus sed massa vehicula bibendum. In ligula orci, pharetra scelerisque libero mattis, rhoncus pharetra libero. Sed eleifend, felis vitae tristique rutrum, odio eros consequat sapien, eget lacinia dui nunc mollis dolor. Maecenas aliquam ante libero, id ultrices turpis sodales id. Nulla facilisi. Aliquam non velit interdum, mollis neque at, imperdiet arcu. Quisque tincidunt sollicitudin dapibus.",
+      socials: [
+        {
+          socialName: "instagram",
+          link: "https://www.instagram.com/mkfwitheproducer/",
+        },
+        {
+          socialName: "youtube",
+          link: "https://www.youtube.com/@mkfwi9474",
+        },
+        {
+          socialName: "spotify",
+          link: "https://open.spotify.com/artist/0OZoJWtNdyhmHfcQ01F1h4",
+        },
+      ],
+    },
+    {
+      id: 2,
+      name: "Solomons Garden",
+      slug: "solomons-garden",
+      shortBio:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse consequat dictum orci. Fusce sed odio id dui consectetur pretium. Cras ullamcorper eu nisl maximus ultrices. Vivamus vel purus sed massa vehicula bibendum. In ligula orci, pharetra scelerisque libero mattis, rhoncus pharetra libero. Sed eleifend, felis vitae tristique rutrum, odio eros consequat sapien, eget lacinia dui nunc mollis dolor. Maecenas aliquam ante libero, id ultrices turpis sodales id. Nulla facilisi. Aliquam non velit interdum, mollis neque at, imperdiet arcu. Quisque tincidunt sollicitudin dapibus.",
+      image: "/images/b1f10cc8-7226-440c-a5af-cf8e393804cd-SOLGARDEN.webp",
+      socials: [
+        {
+          socialName: "instagram",
+          link: "https://www.instagram.com/solomonsgarden/",
+        },
+        {
+          socialName: "youtube",
+          link: "https://www.youtube.com/@solomonsgardenmusic",
+        },
+        {
+          socialName: "spotify",
+          link: "https://open.spotify.com/artist/4chr46sQpyhgijyG7b3amJ",
+        },
+      ],
+    },
+    {
+      id: 3,
+      name: "Nyasha Munashe",
+      slug: "nyasha-munashe",
+      shortBio:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse consequat dictum orci. Fusce sed odio id dui consectetur pretium. Cras ullamcorper eu nisl maximus ultrices. Vivamus vel purus sed massa vehicula bibendum. In ligula orci, pharetra scelerisque libero mattis, rhoncus pharetra libero. Sed eleifend, felis vitae tristique rutrum, odio eros consequat sapien, eget lacinia dui nunc mollis dolor. Maecenas aliquam ante libero, id ultrices turpis sodales id. Nulla facilisi. Aliquam non velit interdum, mollis neque at, imperdiet arcu. Quisque tincidunt sollicitudin dapibus.",
+      image: "/images/542330673_18524880610034768_5302045328342990554_n.jpg",
+      socials: [
+        {
+          socialName: "instagram",
+          link: "https://www.instagram.com/nyasha.munashe/",
+        },
+        {
+          socialName: "youtube",
+          link: "https://www.youtube.com/@nyasha.munashe",
+        },
+        {
+          socialName: "spotify",
+          link: "https://open.spotify.com/artist/1mAT1Qhw7SpFKaAoUwOqS3?si=9PXPETGQSkqHM62fRtT5Hg&fbclid=PAZXh0bgNhZW0CMTEAAacN9rXxJig0UVowJw1Zul6_3l0ThdZjNHCiP8Mx8GxyN-a4gpcZiZR2bSpmlA_aem_A20t0PHNeuBq5N0XjG-etw&nd=1&dlsi=84e11daca0c14591",
+        },
+      ],
+    },
+  ];
+  // ----------------------------------------------------------------------
+
+  // 2. Find the artist in your data matching the requested slug
+  const artist = artistsData.find((artist) => artist.slug === slug);
+
+  // 3. Handle the response
+  if (artist) {
+    // Found the artist: return the data with a 200 status
+    res.status(200).json(artist);
+  } else {
+    // Artist not found: return a 404 status
+    res.status(404).json({ message: `Artist with slug "${slug}" not found` });
+  }
+}

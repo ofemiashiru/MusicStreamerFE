@@ -1,0 +1,66 @@
+// Next.js API route support: https://nextjs.org/docs/api-routes/introduction
+
+export default function handler(req, res) {
+  res.status(200).json([
+    {
+      id: 1,
+      name: "MKFWI",
+      slug: "mkfwi",
+      image: "/images/611e87a5-a818-4fe8-a310-e738858d7949-MKFWI.jpg",
+      socials: [
+        {
+          socialName: "instagram",
+          link: "https://www.instagram.com/mkfwitheproducer/",
+        },
+        {
+          socialName: "youtube",
+          link: "https://www.youtube.com/@mkfwi9474",
+        },
+        {
+          socialName: "spotify",
+          link: "https://open.spotify.com/artist/0OZoJWtNdyhmHfcQ01F1h4",
+        },
+      ],
+    },
+    {
+      id: 2,
+      name: "Solomons Garden",
+      slug: "solomons-garden",
+      image: "/images/b1f10cc8-7226-440c-a5af-cf8e393804cd-SOLGARDEN.webp",
+      socials: [
+        {
+          socialName: "instagram",
+          link: "https://www.instagram.com/solomonsgarden/",
+        },
+        {
+          socialName: "youtube",
+          link: "https://www.youtube.com/@solomonsgardenmusic",
+        },
+        {
+          socialName: "spotify",
+          link: "https://open.spotify.com/artist/4chr46sQpyhgijyG7b3amJ",
+        },
+      ],
+    },
+    {
+      id: 3,
+      name: "Nyasha Munashe",
+      slug: "nyasha-munashe",
+      image: "/images/542330673_18524880610034768_5302045328342990554_n.jpg",
+      socials: [
+        {
+          socialName: "instagram",
+          link: "https://www.instagram.com/nyasha.munashe/",
+        },
+        {
+          socialName: "youtube",
+          link: "https://www.youtube.com/@nyasha.munashe",
+        },
+        {
+          socialName: "spotify",
+          link: "https://open.spotify.com/artist/1mAT1Qhw7SpFKaAoUwOqS3?si=9PXPETGQSkqHM62fRtT5Hg&fbclid=PAZXh0bgNhZW0CMTEAAacN9rXxJig0UVowJw1Zul6_3l0ThdZjNHCiP8Mx8GxyN-a4gpcZiZR2bSpmlA_aem_A20t0PHNeuBq5N0XjG-etw&nd=1&dlsi=84e11daca0c14591",
+        },
+      ],
+    },
+  ]);
+}

@@ -15,12 +15,11 @@ import Playlist from "./Playlist";
 
 import { useMusicPlayer } from "@/context/MusicPlayerContext";
 
-export default function MusicPlayer(/*{ songs }*/) {
+export default function MusicPlayer() {
   const {
     songs,
     songsStatusMessage,
     isPlaying,
-    setIsPlaying,
     audioPlayer, // Exposed Ref from Music context
     togglePlayPause,
     playSong,
@@ -48,7 +47,6 @@ export default function MusicPlayer(/*{ songs }*/) {
   // useEffect hook to set up audio player event listeners and load current song
   useEffect(() => {
     const audio = audioPlayer.current;
-    // if (!audio || songs.length === 0) return; // Ensure audio element and songs are available
     if (!audio) return;
 
     // Listener for when the song's metadata is loaded
@@ -84,7 +82,7 @@ export default function MusicPlayer(/*{ songs }*/) {
   const loadSong = (index) => {
     if (index >= 0 && index < songs.length) {
       setCurrentSongIndex(index);
-      playSong(songs[index], index);
+      playSong(songs[index]);
       // The useEffect hook will handle loading the new song source and playing it
     }
   };

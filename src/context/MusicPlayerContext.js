@@ -68,7 +68,7 @@ export const MusicPlayerProvider = ({ children }) => {
   }, [selectedAlbum, session, fetchSongMetadata]);
 
   const playSong = useCallback(
-    async (song, index) => {
+    async (song) => {
       if (!session) {
         setSongsStatusMessage("You must be logged in to play music.");
         return;
@@ -86,13 +86,14 @@ export const MusicPlayerProvider = ({ children }) => {
 
       try {
         // CALL YOUR NEW API ENDPOINT
-        const response = await fetch(`/api/get-manifest?key=${manifestKey}`);
+        // const response = await fetch(`/api/get-manifest?key=${manifestKey}`);
+        const url = `/api/get-manifest?key=${manifestKey}`;
 
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
+        // if (!response.ok) {
+        //   throw new Error(`HTTP error! Status: ${response.status}`);
+        // }
 
-        const { url } = await response.json(); // The temporary Pre-Signed URL
+        // const { url } = await response.json(); // The temporary Pre-Signed URL
 
         // This triggers the useEffect below to update the audio player
         setCurrentSongUrl(url);

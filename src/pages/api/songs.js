@@ -16,9 +16,9 @@ export default function handler(req, res) {
       songId: "e5570de8-2ac9-4ce9-86c6-96bfc9fc0358",
       albumId: "4242231b-69ab-43fd-aebe-119b76366440",
       trackNumber: 1,
-      title: "Disco",
+      title: "Ending",
       artist: "Ajasko",
-      manifestKey: "Gas/Gas",
+      manifestKey: "Ending/Ending",
       cover:
         "https://album-art-work-mp.s3.eu-west-1.amazonaws.com/spice_cabinet_artwork.jpg",
     },

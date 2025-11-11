@@ -86,14 +86,7 @@ export const MusicPlayerProvider = ({ children }) => {
 
       try {
         // CALL YOUR NEW API ENDPOINT
-        // const response = await fetch(`/api/get-manifest?key=${manifestKey}`);
         const url = `/api/get-manifest?key=${manifestKey}`;
-
-        // if (!response.ok) {
-        //   throw new Error(`HTTP error! Status: ${response.status}`);
-        // }
-
-        // const { url } = await response.json(); // The temporary Pre-Signed URL
 
         // This triggers the useEffect below to update the audio player
         setCurrentSongUrl(url);
@@ -143,6 +136,7 @@ export const MusicPlayerProvider = ({ children }) => {
       hls.on(Hls.Events.MEDIA_ATTACHED, function () {
         hls.on(Hls.Events.MANIFEST_PARSED, function (event, data) {
           // Now we know the stream is ready to play
+          console.log(data);
           if (isPlaying) {
             audio.play().catch((e) => {
               console.error("Autoplay failed via hls.js:", e);

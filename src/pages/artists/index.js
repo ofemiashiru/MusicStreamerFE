@@ -3,7 +3,9 @@ import ArtistsComp from "@/components/ArtistsComp";
 
 import styles from "@/styles/Home.module.css";
 
-export default function Artists() {
+import artistsData from "@/data/artists.json";
+
+export default function Artists({ artists }) {
   return (
     <>
       <Head>
@@ -14,9 +16,21 @@ export default function Artists() {
       </Head>
       <div className={`${styles.page}`}>
         <main className={styles.main}>
-          <ArtistsComp />
+          <ArtistsComp artists={artists} />
         </main>
       </div>
     </>
   );
+}
+
+export async function getStaticProps() {
+  // Return the imported data as a prop named 'artists'
+  // The imported artistsData is already the correct array format.
+  return {
+    props: {
+      artists: artistsData.sort((a, b) => a.name.localeCompare(b.name)),
+    },
+    // Optional: Revalidate the page every 60 seconds in production
+    // revalidate: 60,
+  };
 }

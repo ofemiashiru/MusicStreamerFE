@@ -24,6 +24,7 @@ export default function MusicPlayer() {
     togglePlayPause,
     playSong,
     currentSong,
+    setIsPlaying,
   } = useMusicPlayer();
 
   // State for the index of the currently playing song
@@ -72,6 +73,7 @@ export default function MusicPlayer() {
 
     // Cleanup function to remove event listeners when the component unmounts or dependencies change
     return () => {
+      audio.pause();
       audio.removeEventListener("loadedmetadata", handleLoadedMetadata);
       audio.removeEventListener("timeupdate", handleTimeUpdate);
       audio.removeEventListener("ended", handleSongEnd);
@@ -89,19 +91,31 @@ export default function MusicPlayer() {
 
   // Function to handle playing the next song
   const handleNext = () => {
-    if (songs.length > 0) {
+    if (songs.length > 1) {
+      // SCENARIO 1: Multiple songs - Move to the next song
       const nextIndex = (currentSongIndex + 1) % songs.length;
-      loadSong(nextIndex);
-      // Play will be handled by useEffect after song source changes
+      loadSong(nextIndex); // This function internally sets isPlaying=true
+      console.log("Next song loaded and playing");
+    } else {
+      // SCENARIO 2: Single song or end of non-looping playlist
+
+      // Stop the audio element and explicitly set state to paused
+      audioPlayer.current.pause();
+      audioPlayer.current.currentTime = 0; // Reset to beginning
+      setIsPlaying(false); // Manually set state to paused
+
+      console.log("Playlist finished. Stopped and reset.");
     }
   };
 
   // Function to handle playing the previous song
   const handlePrev = () => {
-    if (songs.length > 0) {
+    if (songs.length > 1) {
       const prevIndex = (currentSongIndex - 1 + songs.length) % songs.length;
       loadSong(prevIndex);
       // Play will be handled by useEffect after song source changes
+    } else {
+      audioPlayer.current.currentTime = 0;
     }
   };
 

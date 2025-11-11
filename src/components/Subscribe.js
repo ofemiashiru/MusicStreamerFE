@@ -1,5 +1,5 @@
 import { loadStripe } from "@stripe/stripe-js";
-import StripeLogo from "./StripeLogo";
+import StripeLogo from "./svgs/StripeLogo";
 
 import styles from "@/styles/Subscribe.module.css";
 

@@ -5,9 +5,9 @@ import { useAuth } from "@/context/AuthContext";
 import { useModal } from "@/context/ModalContext";
 
 import styles from "@/styles/Artist.module.css";
-import InstagramLogo from "@/components/InstagramLogo";
-import YouTubeLogo from "@/components/YouTubeLogo";
-import SpotifyLogo from "@/components/SpotifyLogo";
+import InstagramLogo from "@/components/svgs/InstagramLogo";
+import YouTubeLogo from "@/components/svgs/YouTubeLogo";
+import SpotifyLogo from "@/components/svgs/SpotifyLogo";
 
 import { Noto_Sans_JP } from "next/font/google";
 const notoSansJP = Noto_Sans_JP({
@@ -17,7 +17,7 @@ const notoSansJP = Noto_Sans_JP({
 });
 
 import { CirclePlay, CirclePause } from "lucide-react";
-import AudioVisualiser from "./AudioVisualiser";
+import AudioVisualiser from "./svgs/AudioVisualiser";
 
 const ArtistComp = ({ artistData }) => {
   const { loadArtistAlbum, selectedAlbum, isPlaying, songs, togglePlayPause } =

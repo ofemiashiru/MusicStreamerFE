@@ -9,7 +9,7 @@ import Register from "@/components/Register";
 import "@/styles/globals.css";
 import homeStyles from "@/styles/Home.module.css";
 import modalStyles from "@/styles/Modal.module.css";
-import StripeLogo from "@/components/StripeLogo";
+import StripeLogo from "@/components/svgs/StripeLogo";
 
 import { Noto_Sans_JP } from "next/font/google";
 const notoSansJP = Noto_Sans_JP({
@@ -18,7 +18,7 @@ const notoSansJP = Noto_Sans_JP({
   display: "swap",
 });
 
-import InstagramLogo from "@/components/InstagramLogo";
+import InstagramLogo from "@/components/svgs/InstagramLogo";
 
 import { Amplify } from "aws-amplify";
 import { fetchAuthSession, signOut } from "aws-amplify/auth";

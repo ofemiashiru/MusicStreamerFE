@@ -1,6 +1,6 @@
 # Unequivocal Music
 
-Unequivocal is Music Media Player site made to give artist the freedom to stream their very own content from their own bespoke website. Giving the artist and independent label the freedom to profit from their own streaming plays directly.
+Unequivocal is an Independent Record lable and Music Media Player site made to give artists the freedom to stream their very own content from their own bespoke website, giving the artist and independent label the freedom to profit from their own streaming plays directly.
 
 This project uses Next.js, Node.JS, AWS Amplify, AWS Cognito, AWS MediaConvert and Stripe to handle subscriptions and payments.
 

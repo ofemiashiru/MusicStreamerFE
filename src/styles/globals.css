@@ -1,3 +1,5 @@
+@import "tailwindcss";
+
 :root {
   --background: #ffffff;
   --foreground: #171717;
@@ -12,8 +14,6 @@
 
 @media (prefers-color-scheme: light) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
   }
 }
 
@@ -25,8 +25,6 @@ body {
 }
 
 body {
-  color: var(--foreground);
-  background: var(--background);
 }
 
 * {
@@ -41,13 +39,17 @@ a {
   transition: all 0.3s ease-in-out;
 }
 
-a:hover {
-  color: #1abc9c;
-}
-
 button,
 input[type="submit"] {
   cursor: pointer;
+  color: #ffffff;
+  transition: all 0.3s ease-in-out;
+}
+
+button:hover,
+input[type="submit"]:hover,
+a:hover {
+  color: #1abc9c;
 }
 
 hr {
@@ -63,8 +65,16 @@ input::placeholder {
   font-weight: 100;
 }
 
+input[type="email"],
+input[type="text"],
+input[type="password"] {
+  background-color: rgb(0 0 0 / var(--opacity-90, 1));
+  border: 1px solid rgb(255 255 255 / var(--opacity-50, 1));
+  color: #ffffff;
+  font-weight: 100;
+}
+
 @media (prefers-color-scheme: dark) {
   html {
-    color-scheme: dark;
   }
 }

@@ -21,9 +21,6 @@
   animation-fill-mode: forwards;
 }
 
-.artists {
-}
-
 .artistscontainer {
   display: flex;
   flex-wrap: wrap;

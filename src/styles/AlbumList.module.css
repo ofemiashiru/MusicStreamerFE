@@ -7,7 +7,7 @@
 }
 
 .albumsClosed {
-  top: -235px;
+  top: -230px;
 }
 
 .albums > ul {
@@ -77,11 +77,14 @@
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
+  background-color: rgb(0 0 0 / var(--opacity-90, 1));
+  color: #ffffff;
 }
 
 .albumlisttoggle:hover {
-  background-color: rgb(0 0 0 / var(--opacity-90, 1));
   transition: 0.4s;
+  background-color: rgb(0 0 0 / var(--opacity-50, 1));
+  color: #000000;
 }
 
 @media screen and (max-width: 818px) {

@@ -21,12 +21,15 @@
   transition: 0.4s;
   width: auto;
   position: absolute;
-  top: -31px;
+  top: -37px;
   right: 0;
+  background-color: rgb(0 0 0 / var(--opacity-90, 1));
+  color: #ffffff;
 }
 
 .musicplayertoggle:hover {
-  background-color: rgb(0 0 0 / var(--opacity-90, 1));
+  background-color: rgb(0 0 0 / var(--opacity-50, 1));
+  color: #000000;
   transition: 0.4s;
 }
 
@@ -125,8 +128,7 @@
   border-radius: 10px;
 }
 
-.progress::-moz-range-thumb,
-.volumebar::-moz-range-thumb {
+.progress::-moz-range-thumb {
   width: 10px;
   height: 10px;
   background: #989898;
@@ -153,36 +155,120 @@
   align-items: center;
   justify-content: right;
   background-color: transparent;
-  padding: 1rem 2rem;
+  padding: 1rem 2.5rem;
 }
 
+/* Styling for the volume slider bar itself */
+.volumebar {
+  /* ----------------------------------------------- */
+  /* Common styles for all browsers */
+  /* ----------------------------------------------- */
+  margin: 10px; /* Keep your existing margin */
+  width: 100px; /* Give it a fixed width when un-rotated (before the 270deg rotation makes it vertical) */
+  height: 5px; /* Your desired track height */
+  outline: none;
+  opacity: 0.7;
+  transition: opacity 0.2s;
+  border-radius: 10px; /* For the track */
+
+  /* Remove default browser styles */
+  -webkit-appearance: none; /* For Chrome, Safari, Edge */
+  -moz-appearance: none; /* For Firefox: crucial to remove default styling */
+  appearance: none; /* Standard property, good for future-proofing */
+}
+
+/* ----------------------------------------------- */
+/* Styles for the SLIDER TRACK */
+/* ----------------------------------------------- */
+
+/* Chrome, Safari, Edge (Webkit browsers) */
+.volumebar::-webkit-slider-runnable-track {
+  width: 100%;
+  height: 5px; /* Match the .volumebar height */
+  background: #fff; /* White track */
+  border-radius: 10px; /* Match .volumebar border-radius */
+  border: none; /* Remove any default border */
+}
+
+/* Firefox */
+.volumebar::-moz-range-track {
+  width: 100%;
+  height: 5px; /* Match the .volumebar height */
+  background: #fff; /* White track */
+  border-radius: 10px; /* Match .volumebar border-radius */
+  border: none; /* Remove any default border */
+}
+
+/* ----------------------------------------------- */
+/* Styles for the SLIDER THUMB (the draggable handle) */
+/* ----------------------------------------------- */
+
+/* Chrome, Safari, Edge (Webkit browsers) */
+.volumebar::-webkit-slider-thumb {
+  -webkit-appearance: none; /* Remove default thumb styling */
+  height: 15px; /* Larger than track height for visibility */
+  width: 15px; /* Make it circular */
+  border-radius: 50%; /* Circular thumb */
+  background: #f0f0f0; /* Off-white thumb */
+  border: 1px solid #888; /* Subtle border */
+  margin-top: -5px; /* Vertically center the thumb on the 5px track */
+  cursor: pointer;
+}
+
+/* Firefox */
+.volumebar::-moz-range-thumb {
+  height: 15px; /* Match Webkit thumb height */
+  width: 15px; /* Match Webkit thumb width */
+  border-radius: 50%; /* Circular thumb */
+  background: #f0f0f0; /* Off-white thumb */
+  border: 1px solid #888; /* Subtle border */
+  /* Firefox positioning is often better by default, but you might need slight adjustments here */
+  /* margin-top: -5px; /* Uncomment and adjust if needed */
+  cursor: pointer;
+}
+
+/* Ensure consistent hover/active states if you have them */
+.volumebar::-webkit-slider-thumb:hover {
+  background: #fff;
+}
+.volumebar::-moz-range-thumb:hover {
+  background: #fff;
+}
+
+/* ----------------------------------------------- */
+/* Volume Input Section (Rotation & Positioning) */
+/* ----------------------------------------------- */
 .volumeInputSection {
   position: absolute;
-  top: 0;
-  right: -15px;
-  rotate: 270deg;
+  /* Use 'transform' for rotation, not 'rotate' property directly. 
+     'rotate' is a newer individual transform property, but 'transform: rotate(...)'
+     is more widely supported and behaves consistently with 'position: absolute'. */
+  transform: rotate(270deg);
+
+  /* Adjusted positioning for better cross-browser consistency */
+  /* You will likely need to fine-tune 'right' and 'top' based on your layout.
+     Start with these values and adjust by small increments (e.g., 1px) */
+  right: 9px; /* Example adjustment: might need to be more negative */
+  top: 50%; /* Center vertically before rotation, then adjust */
+  transform-origin: 50% 50%; /* Ensure rotation is around its center */
+  transform: translateY(-50%) rotate(270deg); /* Combine centering and rotation */
+
   background-color: rgb(0 0 0 / var(--opacity-90, 1));
   opacity: 0;
   transition: all 300ms ease-in-out;
   z-index: 10;
+  /* Add explicit width and height for consistency after rotation */
+  width: 120px; /* The overall width of the rotated section (e.g., slider width + margins) */
+  height: 40px; /* The overall height of the rotated section */
+  display: flex; /* Make it a flex container to potentially center the slider within it */
+  align-items: center; /* Center slider vertically */
+  justify-content: center; /* Center slider horizontally */
 }
 
 .volumeInputShown {
-  transition: all 300ms ease-in-out;
-  top: -87px;
+  top: -60px;
   opacity: 1;
-}
-
-.volumebar {
-  margin: 10px;
-  -webkit-appearance: none;
-  height: 5px;
-  background: #fff;
-  outline: none;
-  opacity: 0.7;
-  -webkit-transition: 0.2s;
-  transition: opacity 0.2s;
-  border-radius: 10px;
+  transition: all 300ms ease-in-out;
 }
 
 .volumeIcon {

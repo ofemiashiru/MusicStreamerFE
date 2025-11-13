@@ -136,7 +136,6 @@ export const MusicPlayerProvider = ({ children }) => {
       hls.on(Hls.Events.MEDIA_ATTACHED, function () {
         hls.on(Hls.Events.MANIFEST_PARSED, function (event, data) {
           // Now we know the stream is ready to play
-          console.log(data);
           if (isPlaying) {
             audio.play().catch((e) => {
               console.error("Autoplay failed via hls.js:", e);

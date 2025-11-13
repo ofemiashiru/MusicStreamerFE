@@ -34,7 +34,7 @@ export default function Playlist({ onLoadSong }) {
           <li
             key={song.songId}
             className={currentSong?.trackNumber === index ? styles.playing : ""}
-            onClick={() => onLoadSong(song.trackNumber)}
+            onClick={() => onLoadSong(index)}
           >
             <div className={styles.song}>
               <div className={styles.coverBorder}>

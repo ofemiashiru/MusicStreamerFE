@@ -11,11 +11,11 @@ const ArtistsComp = ({ artists }) => {
 
   return (
     <div className={styles.appContainer}>
-      <div className={`${styles.artists}`}>
-        <div className={styles.artistscontainer}>
+      <div className={`flex flex-wrap`}>
+        <div className={`${styles.artistscontainer}`}>
           {artists.map((artist) => (
             <Link key={artist.id} href={`/artists/${artist.slug}`} passHref>
-              <h3 className={styles.artistheader}>{artist.name}</h3>
+              <h3 className={`${styles.artistheader}`}>{artist.name}</h3>
               <img src={artist.image} />
             </Link>
           ))}

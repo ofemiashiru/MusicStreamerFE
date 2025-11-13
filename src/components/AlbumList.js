@@ -75,7 +75,7 @@ export default function AlbumList({ albums, albumsStatusMessage }) {
                   />
                 </div>
                 <div className={styles.albuminfo}>
-                  <p>{album.title}</p>
+                  <p className="font-bold">{album.title}</p>
                   <p>{album.artist}</p>
                 </div>
                 <div className={styles.icon}>

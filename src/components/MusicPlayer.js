@@ -64,7 +64,17 @@ export default function MusicPlayer() {
 
     // Listener for when the song ends, automatically plays the next one
     const handleSongEnd = () => {
-      handleNext();
+      if (currentSongIndex < songs.length - 1) {
+        handleNext();
+      } else {
+        // Stop the audio element and explicitly set state to paused
+        audioPlayer.current.pause();
+        audioPlayer.current.currentTime = 0; // Reset to beginning
+        loadSong(0); // Reset song to first track
+        setIsPlaying(false); // Manually set state to paused
+
+        console.log("Playlist finished. Stopped and reset.");
+      }
     };
 
     audio.addEventListener("loadedmetadata", handleLoadedMetadata);
@@ -78,7 +88,7 @@ export default function MusicPlayer() {
       audio.removeEventListener("timeupdate", handleTimeUpdate);
       audio.removeEventListener("ended", handleSongEnd);
     };
-  }, [audioPlayer, songs]); // Re-run effect if songs or currentSongIndex changes
+  }, [audioPlayer, songs, currentSongIndex]); // Re-run effect if songs or currentSongIndex changes
 
   // Function to load a specific song from the playlist
   const loadSong = (index) => {
@@ -91,21 +101,9 @@ export default function MusicPlayer() {
 
   // Function to handle playing the next song
   const handleNext = () => {
-    if (songs.length > 1) {
-      // SCENARIO 1: Multiple songs - Move to the next song
-      const nextIndex = (currentSongIndex + 1) % songs.length;
-      loadSong(nextIndex); // This function internally sets isPlaying=true
-      console.log("Next song loaded and playing");
-    } else {
-      // SCENARIO 2: Single song or end of non-looping playlist
-
-      // Stop the audio element and explicitly set state to paused
-      audioPlayer.current.pause();
-      audioPlayer.current.currentTime = 0; // Reset to beginning
-      setIsPlaying(false); // Manually set state to paused
-
-      console.log("Playlist finished. Stopped and reset.");
-    }
+    const nextIndex = (currentSongIndex + 1) % songs.length;
+    loadSong(nextIndex); // This function internally sets isPlaying=true
+    console.log("Next song loaded and playing");
   };
 
   // Function to handle playing the previous song
@@ -176,61 +174,6 @@ export default function MusicPlayer() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [songs]); // Load the first song when the song list changes
 
-  // Render loading/error state if no songs are fetched yet
-  if (songs.length === 0) {
-    const statusText = songsStatusMessage || "No songs loaded.";
-    return (
-      <div
-        className={`${styles.main} ${
-          musicPlayerVisibile && styles.closePlayer
-        }`}
-      >
-        <div className={styles.left}>
-          {/* Left Section */}
-          <div
-            className={
-              playlistVisible ? styles.playlistMain : styles.playlistMainHidden
-            }
-          ></div>
-          <div className={styles.artwork}>
-            <img
-              id="album-art"
-              src="https://placehold.co/300x300/4B5563/F9FAFB?text=No+Song"
-              alt="Album Art"
-            />
-          </div>
-        </div>
-        <div className={styles.middle}>
-          {/* Playback Controls */}
-          <div className={styles.playback}>
-            <button onClick={handlePrev} disabled>
-              <SkipBack size={13} strokeWidth={2} />
-            </button>
-            <button onClick={togglePlayPause} disabled>
-              <Play size={25} strokeWidth={1} />
-            </button>
-            <button onClick={handleNext} disabled>
-              <SkipForward size={13} strokeWidth={2} />
-            </button>
-          </div>
-        </div>
-        <div className={styles.right}>
-          <button
-            className={styles.musicplayertoggle}
-            style={{
-              position: "absolute",
-              top: "-31px",
-              right: "0",
-            }}
-            onClick={togglePlayer}
-          >
-            {musicPlayerVisibile ? "open" : "close"}
-          </button>
-        </div>
-      </div>
-    );
-  }
-
   return (
     <div
       className={`${styles.main} ${musicPlayerVisibile && styles.closePlayer}`}
@@ -249,7 +192,11 @@ export default function MusicPlayer() {
           <div className={styles.artwork} onClick={togglePlaylist}>
             <img
               id="album-art"
-              src={currentSong?.cover}
+              src={
+                songs.length > 0
+                  ? currentSong?.cover
+                  : "https://placehold.co/300x300/4B5563/F9FAFB?text=No+Song"
+              }
               alt="Album Art"
               onError={(e) =>
                 (e.target.src =
@@ -258,7 +205,7 @@ export default function MusicPlayer() {
             />
           </div>
           <div className={styles.info}>
-            <p>{currentSong?.title}</p>
+            <p className="font-bold">{currentSong?.title}</p>
             <p>{currentSong?.artist}</p>
           </div>
         </div>
@@ -304,6 +251,20 @@ export default function MusicPlayer() {
         <button className={styles.musicplayertoggle} onClick={togglePlayer}>
           {musicPlayerVisibile ? "open" : "close"}
         </button>
+        <div
+          className={`${styles.volumeInputSection} ${
+            volumeVisisble && styles.volumeInputShown
+          }`}
+        >
+          <input
+            type="range"
+            id="volume-slider"
+            className={styles.volumebar}
+            defaultValue={songVolume}
+            max="100"
+            onChange={setVolume}
+          />
+        </div>
         <div className={styles.volumecontrolwrapper}>
           <button className={styles.volumeButton} onClick={toggleVolume}>
             {songVolume > 60 ? (
@@ -326,20 +287,6 @@ export default function MusicPlayer() {
               />
             )}
           </button>
-        </div>
-        <div
-          className={`${styles.volumeInputSection} ${
-            volumeVisisble && styles.volumeInputShown
-          }`}
-        >
-          <input
-            type="range"
-            id="volume-slider"
-            className={styles.volumebar}
-            defaultValue={songVolume}
-            max="100"
-            onChange={setVolume}
-          />
         </div>
       </div>
     </div>

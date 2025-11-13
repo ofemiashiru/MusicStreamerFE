@@ -121,9 +121,7 @@ export default function SignIn() {
   };
   return (
     <div className={styles.signin}>
-      <h2>
-        Sign in {isLoading && <LoaderCircle className={styles.animatespin} />}
-      </h2>
+      <h2>Sign in</h2>
       {error && <p className={styles.error}>{error}</p>}
       {!isNewPasswordRequired ? (
         // Render the regular sign-in form
@@ -180,6 +178,9 @@ export default function SignIn() {
           />
         </form>
       )}
+      <p className="flex justify-center">
+        {isLoading && <LoaderCircle className={`${styles.animatespin}`} />}
+      </p>
     </div>
   );
 }

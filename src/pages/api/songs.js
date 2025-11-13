@@ -23,36 +23,6 @@ export default function handler(req, res) {
         "https://album-art-work-mp.s3.eu-west-1.amazonaws.com/spice_cabinet_artwork.jpg",
     },
     {
-      songId: "5cc53f23-8265-4b48-97c4-fec5be88c0d9",
-      albumId: "4242231b-69ab-43fd-aebe-119b76366440",
-      trackNumber: 2,
-      title: "Hard To List",
-      artist: "Ajasko",
-      manifestKey: "Gas/Gas",
-      cover:
-        "https://album-art-work-mp.s3.eu-west-1.amazonaws.com/spice_cabinet_artwork.jpg",
-    },
-    {
-      songId: "757cfd3b-1a2f-478f-8c1e-13656593c282",
-      albumId: "4242231b-69ab-43fd-aebe-119b76366440",
-      trackNumber: 3,
-      title: "Hurting",
-      artist: "Ajasko",
-      manifestKey: "Gas/Gas",
-      cover:
-        "https://album-art-work-mp.s3.eu-west-1.amazonaws.com/spice_cabinet_artwork.jpg",
-    },
-    {
-      songId: "fe392e1a-8bbe-42e8-869c-f842c513acd7",
-      albumId: "4242231b-69ab-43fd-aebe-119b76366440",
-      trackNumber: 4,
-      title: "Rush The Stage",
-      artist: "Ajasko",
-      manifestKey: "Gas/Gas",
-      cover:
-        "https://album-art-work-mp.s3.eu-west-1.amazonaws.com/spice_cabinet_artwork.jpg",
-    },
-    {
       songId: "aNh92e1a-8bbe-42e8-769c-f842c513acd7",
       albumId: "6742231b-69ab-43fd-aebe-119b76361040",
       trackNumber: 0,

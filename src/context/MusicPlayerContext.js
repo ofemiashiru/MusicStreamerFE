@@ -85,11 +85,28 @@ export const MusicPlayerProvider = ({ children }) => {
       setCurrentSong(song); // Set the song as currently selected
 
       try {
-        // CALL YOUR NEW API ENDPOINT
-        const url = `/api/get-manifest?key=${manifestKey}`;
+        // 1. Construct the internal API URL
+        const apiEndpoint = `/api/get-cf-manifest?key=${manifestKey}`;
 
-        // This triggers the useEffect below to update the audio player
-        setCurrentSongUrl(url);
+        // 2. Fetch the data from your secure API endpoint
+        const response = await fetch(apiEndpoint);
+
+        if (!response.ok) {
+          // Handle non-200 responses (e.g., 403 Forbidden, 500 Internal Error)
+          throw new Error(`API failed with status: ${response.status}`);
+        }
+
+        const data = await response.json();
+
+        // 3. Extract the actual CloudFront Signed URL from the response body
+        const streamUrl = data.streamUrl;
+
+        if (!streamUrl) {
+          throw new Error("API did not return a stream URL.");
+        }
+
+        // 4. Set the actual stream URL for the audio player to use
+        setCurrentSongUrl(streamUrl);
         setSongsStatusMessage("");
         setIsPlaying(true);
       } catch (error) {
@@ -116,42 +133,54 @@ export const MusicPlayerProvider = ({ children }) => {
       audio.hls.destroy();
     }
 
-    // Check if the browser supports HLS natively (like Safari)
-    if (
-      audio.canPlayType("application/vnd.apple.mpegurl") ||
-      Hls.isSupported() === false
-    ) {
-      // Use native browser playback (works for Safari or direct links)
+    const isNativelySupported = audio.canPlayType(
+      "application/vnd.apple.mpegurl"
+    );
+
+    if (isNativelySupported && Hls.isSupported() === false) {
+      // 1. SAFARI: Use native playback only if the browser explicitly supports HLS
+      //    MIME type AND hls.js is not available/supported (or to force native).
+      console.log("USING NATIVE HLS PLAYBACK (e.g., Safari)");
       audio.pause();
       audio.src = currentSongUrl;
       audio.load();
     } else if (Hls.isSupported()) {
-      // 🚨 Use hls.js for adaptive streaming in other browsers 🚨
-      const hls = new Hls();
-      audio.hls = hls; // Store the instance on the audio element for cleanup/access
+      // 2. OTHER BROWSERS (Chrome, Firefox, Edge): Use hls.js via MSE
+      console.log("USING HLS.JS (e.g., Chrome, Firefox)");
+      const hls = new Hls({
+        // Optional: Add hls.js config like 'startPosition' if needed
+      });
+      audio.hls = hls; // Store the instance
 
       hls.loadSource(currentSongUrl);
       hls.attachMedia(audio);
 
-      hls.on(Hls.Events.MEDIA_ATTACHED, function () {
-        hls.on(Hls.Events.MANIFEST_PARSED, function (event, data) {
-          // Now we know the stream is ready to play
-          if (isPlaying) {
+      hls.on(Hls.Events.MANIFEST_PARSED, function () {
+        // Playback logic moved here, as media is attached and manifest is ready
+        if (isPlaying) {
+          // A brief timeout can sometimes help avoid race conditions/autoplay issues
+          setTimeout(() => {
             audio.play().catch((e) => {
               console.error("Autoplay failed via hls.js:", e);
+              // Handle autoplay failure as before
               setSongsStatusMessage("Playback requires user interaction.");
               setIsPlaying(false);
             });
-          }
-        });
+          }, 0);
+        }
       });
 
       hls.on(Hls.Events.ERROR, function (event, data) {
         if (data.fatal) {
-          console.error("HLS Fatal Error:", data.details);
-          setSongsStatusMessage(
-            `Error loading stream: ${data.details}. Is the S3 URL valid?`
-          );
+          // Attempt to recover from fatal error
+          if (data.details === Hls.ErrorDetails.MANIFEST_LOAD_ERROR) {
+            // Handle network issues etc.
+          } else {
+            hls.destroy();
+            setSongsStatusMessage(
+              `Fatal error loading stream: ${data.details}.`
+            );
+          }
         }
       });
     } else {

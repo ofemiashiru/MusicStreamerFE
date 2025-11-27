@@ -138,14 +138,13 @@ export const MusicPlayerProvider = ({ children }) => {
     );
 
     if (isNativelySupported && Hls.isSupported() === false) {
-      // 1. SAFARI: Use native playback only if the browser explicitly supports HLS
-      //    MIME type AND hls.js is not available/supported (or to force native).
+      // SAFARI: Use native playback only if the browser explicitly supports HLS MIME type AND hls.js is not available/supported (or to force native).
       console.log("USING NATIVE HLS PLAYBACK (e.g., Safari)");
       audio.pause();
       audio.src = currentSongUrl;
       audio.load();
     } else if (Hls.isSupported()) {
-      // 2. OTHER BROWSERS (Chrome, Firefox, Edge): Use hls.js via MSE
+      // OTHER BROWSERS (Chrome, Firefox, Edge): Use hls.js via MSE
       console.log("USING HLS.JS (e.g., Chrome, Firefox)");
       const hls = new Hls({
         // Optional: Add hls.js config like 'startPosition' if needed
